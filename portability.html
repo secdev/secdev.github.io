@@ -1,0 +1,550 @@
+<html>
+<head>
+<title>Scapy portability page</title>
+<link rel="stylesheet" href="scapy.css" type="text/css">
+<head>
+<body>
+
+<h1>Scapy portability page</h1>
+
+<ul>
+<li><a href=#linux>Linux native installation guide</a>
+<li><a href=#generic>generic Unix installation guide</a>
+<li><a href=#openbsd>OpenBSD installation guide</a>
+<li><a href=#freebsd>FreeBSD installation guide</a>
+<li><a href=#osx>Mac OS X 10.4 (Tiger) installation guide</a>
+<li><a href=#windows>Windows installation guide</a>
+</ul>
+
+
+
+
+<h2><a name=linux>Linux native installation guide</h2>
+
+Scapy can run natively on Linux. It can alternatively use dnet and pcap libraries (see <a href=#generic>generic unix installation guide</a>).
+
+<h3>Linux native installation</h3>
+
+There are some specific requirements for a native use :
+
+<ul>
+<li> Python 2.3 or 2.4. (Python 2.4 is needed for Bluetooth stuff)
+<li> install tcpdump and make sure it is in the <tt>$PATH</tt> (only used to compile BPF filters (-ddd option))
+<li> make sure your kernel has <em>Packet socket</em> selected (<tt>CONFIG_PACKET</tt>)
+<li> if your kernel is < 2.6, make sure that <em>Socket filtering</em> is selected (<tt>CONFIG_FILTER</tt>)
+</ul>
+
+
+<h3>Optional packages</h3>
+
+<ul>
+<li> install graphviz and imagemagick (for graph stuff)
+<li> install python-gnuplot package (for <tt>PacketList.plot()</tt>)
+<li> install python-crypto package (for WEP stuff)
+<li> install python-visual (<a href="http://vpython.org">http://vpython.org</a>) (for 3D stuff)
+<li> install python-pyx package (for <tt>Packet.psdump()</tt>, <tt>Packet.pdfdump()</tt>, <tt>PacketList.psdump()</tt> and <tt>PacketList.pdfdump()</tt>)
+<li> the <tt>/etc/ethertypes</tt> file can be found on ebtables or downloaded  <a href="http://www.secdev.org/projects/scapy/files/ethertypes">here</a> 
+<li> install acroread and gv (for <tt>psdump()</tt> and <tt>pdfdump()</tt> when called without parameters)
+<li> install sox (for VOIP stuff)
+</ul>
+
+
+<h3>Debian</h3>
+
+<pre>
+# apt-get install tcpdump graphviz imagemagick python-gnuplot python-crypto python-pyx 
+</pre>
+
+
+
+
+
+
+
+<h2><a name=generic>Generic Unix installation guide</h2>
+
+<h3>Scapy dependances</h3>
+You need Python 2.3 or 2.4.
+Some Python packages (at least Python 2.3 for MacOS) come without
+libreadline wrapper, so you'll need to install it yourself 
+(<a href=http://www.pycs.net/bbum/2004/1/21/readline.so.gz>this one for instance</a>).
+
+<h4>Dependancies for building wrappers</h4>
+
+You'll need Python development packages (for instance, python2.3-dev
+package for Debian).
+
+
+<h3>Installing libdnet and its Python wrapper</h3>
+
+We'll use the CVS version. There is no password.
+
+<pre>
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/libdnet login
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/libdnet co -P libdnet
+cd libdnet
+./configure
+make
+sudo make install
+cd python
+python ./setup.py build
+sudo python ./setup.py install
+</pre>
+
+That's it.
+
+
+<h3>Installing libpcap and its Python wrapper</h3>
+
+First, install libpcap and libpcap development headers with
+any means your OS give to you. For instance, with Debian, you'll
+type 
+<pre>
+apt-get install libpcap0.7 libpcap-dev
+</pre>
+
+Once this is ready, we can build the python wrapper.
+(<a href="http://sourceforge.net/projects/pylibpcap">http://sourceforge.net/projects/pylibpcap</a>)
+
+<pre>
+wget http://ovh.dl.sourceforge.net/sourceforge/pylibpcap/pylibpcap-0.4.tar.gz
+tar zxf pylibpcap-0.4.tar.gz
+cd pylibpcap-0.4
+python ./setup.py build
+sudo python ./setup.py install
+</pre>
+
+We encountered a strange error with this wrapper with Python2.4 on MacOS.
+It seems the module was not able to overload <tt>__doc__</tt>. Changing 
+the line <tt>if sys.version[0] == '2':</tt> in something always false (<tt>if 0:</tt> for instance)
+resolved it.
+
+
+<h3>Optional packages</h3>
+
+<ul>
+<li> install graphviz and imagemagick (for graph stuff)
+<li> install python-gnuplot package (for <tt>PacketList.plot()</tt>)
+<li> install python-crypto package (for WEP stuff)
+<li> install python-pyx package (for <tt>Packet.psdump()</tt>, <tt>Packet.pdfdump()</tt>, <tt>PacketList.psdump()</tt> and <tt>PacketList.pdfdump()</tt>)
+<li> the <tt>/etc/ethertypes</tt> file can be found on ebtables or downloaded  <a href="http://www.secdev.org/projects/scapy/files/ethertypes">here</a>
+<li> install acroread and gv (for <tt>psdump()</tt> and <tt>pdfdump()</tt> when called without parameters)
+<li> install sox (for VOIP stuff)
+</ul>
+
+
+
+<h2><a name=openbsd>Scapy on OpenBSD 3.8 - Quick Installation Guide</h2>
+
+(by Lee Chin Sheng)
+<p>
+
+Below are all the packages/sources that need to be installed in order to get Scapy run properly.
+<p>
+<ul>
+<li>python-2.3.5p2
+<li>libpcap-0.9.4.tar.gz
+<li>py-libpcap-0.3.1p0
+<li>libdnet-1.10
+<li>py-libdnet-1.10
+<li>py-crypto-2.0
+<li>gnuplot-4.0.0
+<li>py-gnuplot-1.7
+<li>PyX-0.8.1.tar.gz
+<li>graphviz-1.16p1
+</ul>
+
+<h3>Installing libpcap from source</h3>
+
+
+libpcap-0.9.4 (Packet Capture Library)
+
+<pre>
+shell>wget http://www.tcpdump.org/release/libpcap-0.9.4.tar.gz
+shell>tar xvzf libpcap-0.9.4.tar.gz
+shell>cd libpcap-0.9.4
+shell>./configure
+shell>make && make install
+</pre>
+
+<h3>Installing other packages</h3>
+
+Depends on which shell you are using, the default is ksh
+
+Note: You can find lots of mirrors from the this url, check one nearby your location on  <a href="http://www.openbsd.org/ftp.html#http">http://www.openbsd.org/ftp.html#http</a>
+
+<pre>
+shell>export PKG_PATH=http://public.www.planetmirror.com/pub/OpenBSD/3.8/packages/i386/
+</pre>
+
+Or if you are using csh
+
+<pre>
+shell>setenv PKG_PATH http://public.www.planetmirror.com/pub/OpenBSD/3.8/packages/i386/
+</pre>
+
+
+Now you can just install all the packages easily with
+
+<pre>
+shell>pkg_add ${PKG_PATH}libdnet-1.10
+shell>pkg_add ${PKG_PATH}python-2.3.5p2.tgz
+shell>pkg_add ${PKG_PATH}py-libpcap-0.5.3p0.tgz
+shell>pkg_add ${PKG_PATH}py-crypto-2.0.tgz
+shell>pkg_add ${PKG_PATH}gnuplot-4.0.0.tgz
+shell>pkg_add ${PKG_PATH}py-gnuplot-1.7.tgz
+shell>pkg_add ${PKG_PATH}graphviz-1.16p1.tgz
+</pre>
+
+<h3>Installing PyX from source</h3>
+
+Installing PyX-0.8.1 from source - for psdump() and pdfdump() to function properly.
+
+There's a slightly issue since PyX requires teTeX including font Type 1 and I have problem installing teTeX through package since I 
+get mismatch md5 checksum. However you can still install PyX and use <tt>psfont.cmz</tt> instead.
+
+PyX-0.8.1 (Python Graphic Package)
+
+Choose any PyX download mirror - http://prdownloads.sourceforge.net/pyx/PyX-0.8.1.tar.gz?download
+
+<pre>
+shell>wget http://optusnet.dl.sourceforge.net/sourceforge/pyx/PyX-0.8.1.tar.gz
+shell>tar xvzf PyX-0.8.1.tar.gz
+shell>cd PyX-0.8.1
+shell>python setup.py build
+shell>python setup.py install
+</pre>
+
+To use font <tt>psfonts.cmz</tt>
+
+<pre>
+shell>python
+>>>from pyx import *
+>>>text.set(fontmaps="/usr/local/share/texmf-dist/fonts/map/dvips/ams/psfonts.cmz")
+>>>
+</pre>
+
+If Scapy complains that it can't open Ethertypes file, you can
+download the ethertypes file that from this url
+ <a href="http://www.secdev.org/projects/scapy/files/ethertypes">http://www.secdev.org/projects/scapy/files/ethertypes</a> 
+and put it into <tt>/etc</tt> directory.
+
+
+
+<h2><a name=freebsd>Scapy on FreeBSD - Quick Installation Guide</h2>
+
+(by Lee Chin Sheng)
+<p>
+
+Scapy requires lots of dependencies, so I have to install it. 
+Luckily we have all of them in ports/packages and you can go 
+for either one. For me I prefer package as it is fast instead of compiling from port.
+
+<ul>
+<li> python-2.4.1.3 (/usr/ports/lang/python)
+<li> libpcap-0.9.4
+<li> libdnet-1.10 (/usr/ports/net/libdnet)
+<li> py24-pcap-0.4/0.5 (/usr/ports/net/py-pcap)
+<li> py24-pycrypto-2.0.1 (/usr/ports/security/py-pycrypto)
+<li> py24-PyX-0.8 (/usr/ports/graphics/py-PyX)
+<li> py-gnuplot-1.7 (/usr/ports/math/py-gnuplot/)
+<li> ImageMagick-6.2.2.1 (/usr/ports/graphics/ImageMagick)
+<li> graphviz-2.2 (/usr/ports/graphics/graphviz)
+</ul>
+
+Before you install those packages, basically you can specify which mirror site you want to fetch,
+
+If you are using tcsh or csh,
+
+<pre>
+shell>setenv PACKAGESITE ftp://ftp5.freebsd.org/pub/FreeBSD/releases/i386/6.0-RELEASE/packages/All/
+</pre>
+
+If you are using ksh or bash,
+
+<pre>
+shell>export PACKAGESITE=ftp://ftp5.freebsd.org/pub/FreeBSD/releases/i386/6.0-RELEASE/packages/All/
+</pre>
+
+You can actually find the mirror sites on this link <a href="http://www.freebsd.org/releases/6.0R/announce.html">http://www.freebsd.org/releases/6.0R/announce.html</a>
+
+
+<h3>Installing Python</h3>
+
+<pre>
+shell>pkg_add -r python-2.4.1.3
+</pre>
+
+<h3>Installing libpcap from source</h3>
+
+libpcap-0.9.4 (Packet Capture Library)
+
+<pre>
+shell>wget http://www.tcpdump.org/release/libpcap-0.9.4.tar.gz
+shell>tar xvzf libpcap-0.9.4.tar.gz
+shell>cd libpcap-0.9.4
+shell>./configure
+shell>make && make install
+</pre>
+
+<h3>Installing libdnet-1.10 from port</h3>
+
+Note on libdnet: You have to install this by using port to enable python wrapping.
+
+<pre>
+shell>cd /usr/ports/net/libdnet
+shell>make WITH_PYTHON=yes install
+</pre>
+
+<h3>Installing py24-pcap</h3>
+
+Note on py24-pcap: If you are installing py24-pcap-0.4, use port, and if you are going for py24-pcap-0.5 
+which is current, you can just install the package. 
+
+<p>
+If you use py24-pcap-0.4 (/usr/ports/net/py-pcap), a small fix in this package is necessary to
+make it work :
+
+<pre>
+shell>cd /usr/ports/net/py-pcap/
+shell>make
+shell>cd work/pylibpcap-0.4/
+</pre>
+Then replace line 34 of pcap.py by: <tt>if 0:</tt>
+<pre>
+shell>cd ../..
+shell>make install clean
+</pre>
+
+
+
+<h3>Installing Other Needed Apps</h3>
+
+For py24-pycrypto, py24-PyX, py-gnuplot, graphiviz, ImageMagick, you can just install using packages.
+
+<pre>
+shell>pkg_add -vr py24-pycrypto py24-PyX py-gnuplot ImageMagick graphviz
+</pre>
+
+For PyX font mapping,
+check out <tt>/usr/local/etc/pyxrc</tt>, or you can create a file under user directory, <tt>~/.pyxrc</tt>
+
+Edit this line :
+<pre>
+fontmaps = psfonts.map bsr.map
+</pre>
+
+then run
+<pre>
+shell>updmap
+</pre>
+
+Note: updmap is a utility that creates font config for dvips, pdftex, xdvi, etc. 
+It updates font map files for Tex output drivers, thanks ctime for the tips.
+<p>
+
+If Scapy complains that it can't open Ethertypes file, you can
+download the ethertypes file that from this url
+ <a href="http://www.secdev.org/projects/scapy/files/ethertypes">http://www.secdev.org/projects/scapy/files/ethertypes</a> 
+and put it into <tt>/etc</tt> directory.
+
+
+<h2><a name=osx>Scapy on Mac OS X 10.4 (Tiger)</h2>
+
+There are 3 recipes. Choose the one that fit your taste.
+Recipe 3 should replace recipe 2 since Scapy has been added to Darwin ports.
+
+<h3>Recipe 1</h3>
+
+(by Guillaume Valadon)
+<p>
+
+This guide describes howto install Scapy on a fresh Tiger installation
+
+Requirements:
+<ul>
+<li>Xcode Tools (on Mac OS X Install Disc)</li>
+<li><a href='http://www.swig.org/'>swig</a>
+</ul>
+
+<h4>Installing libdnet and its Python wrapper</h4>
+
+We'll use the CVS version. There is no password.
+
+<pre>
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/libdnet login
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/libdnet co -P libdnet
+cd libdnet
+./configure
+make
+sudo make install
+cd python
+python ./setup.py build
+sudo python ./setup.py install
+</pre>
+
+<h4>Installing libpcap and its Python wrapper</h4>
+
+First all, swig must be installed. Fink is used in the example, but any installation should work.
+<pre>
+sudo apt-get install swig swig-shlibs
+</pre>
+
+Once this is ready, we can build the python wrapper.
+(<a href="http://sourceforge.net/projects/pylibpcap">http://sourceforge.net/projects/pylibpcap</a>)
+
+<pre>
+wget http://ovh.dl.sourceforge.net/sourceforge/pylibpcap/pylibpcap-0.4.tar.gz
+tar zxf pylibpcap-0.4.tar.gz
+cd pylibpcap-0.4
+python ./setup.py build
+sudo python ./setup.py install
+</pre>
+
+<h4>Installing readline</h4>
+
+From <a href='http://www.macosxhints.com/article.php?story=20050107140338573'>macosxhints</a>:
+<pre>
+python `python -c "import pimp; print pimp.__file__"` -i readline
+</pre>
+
+
+<h3>Recipe 2</h3>
+
+(by Christopher Owen)
+
+<ol>
+<li> Install X11<br>
+
+ On the Tiger DVD, it is located in the "Optional Installs.mpkg"  
+ package.
+
+<li> Install X11 SDK<br>
+
+ On the Tiger DVD, it is located in the "Xcode Tools/Packages"  
+ directory.
+
+<li>Install darwinports<br>
+
+ Download the dmg from darwinports.org and install
+<pre>
+sudo port -d selfupdate
+</pre>
+
+<li> Install Python 2.4
+<pre>
+sudo port install python24
+</pre>
+
+<li> Add readline support to python
+<pre>
+sudo port install py-readline
+</pre>
+
+<li> Add gnuplot support to python
+<pre>
+sudo port install py-gnuplot
+</pre>
+
+<li> Add crypto support to python
+<pre>
+sudo port install py-crypto
+</pre>
+
+<li>Add PyX support to python
+<pre>
+sudo port install py-pyx
+</pre>
+
+<li>Install swig
+<pre>
+sudo port install swig
+</pre>
+
+<li>Install wget
+<pre>
+sudo port install wget
+</pre>
+
+<li> Install the pylibpcap python wrapper
+<pre>
+wget http://puzzle.dl.sourceforge.net/sourceforge/pylibpcap/ 
+pylibpcap-0.5.1.tar.gz
+tar zxf pylibpcap-0.5.1.tar.gz
+cd pylibpcap-0.5.1
+python2.4 ./setup.py build
+sudo python2.4 ./setup.py install
+</pre>
+
+<li> Install libdnet
+<pre>
+sudo port install libdnet
+</pre>
+
+<li>Add dnet support to python
+<pre>
+cd /tmp
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/libdnet login
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/libdnet  
+co -P libdnet
+cd libdnet/python
+cd python
+python2.4 ./setup.py build
+sudo python2.4 ./setup.py install
+cd ..
+rm -rf libdnet*
+</pre>
+
+ <li>Download ethertypes file from ebtables project
+ <ul>
+ <li>Download from <a href="http://www.secdev.org/projects/scapy/files/ethertypes">http://www.secdev.org/projects/scapy/files/ethertypes</a>
+ <li>copy to /etc/ethertypes
+ </ul>
+
+<li>Download and run scapy
+<pre>
+sudo python2.4 scapy.py
+</pre>
+</ol>
+
+<h3>Recipe 3</h3>
+
+(by Christopher Owen)
+
+<ol>
+<li> Install X11<br>
+
+ On the Tiger DVD, it is located in the "Optional Installs.mpkg"  
+ package.
+
+<li> Install X11 SDK<br>
+
+ On the Tiger DVD, it is located in the "Xcode Tools/Packages"  
+ directory.
+
+<li>Install darwinports<br>
+
+ Download the dmg from darwinports.org and install it
+
+<li>Update darwinports<br>
+<pre>
+sudo port -d selfupdate
+</pre>
+
+<li> Install Scapy
+<pre>
+sudo port install scapy
+</pre>
+</ol>
+
+
+
+<h2><a name=windows>Scapy on Windows</h2>
+
+Scapy is developed with Unix systems in mind. Nevertheless some people 
+succeeded in porting it to Windows. Everything you need to know to have
+it work on windows is on <a href="http://trac.secdev.org/scapy/wiki/WindowsInstallationGuide">the Windows Installation guide</a> they maintain on Scapy's wiki.
+
+
+</body>
+</html>
