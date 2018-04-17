@@ -39,15 +39,15 @@
     </ul>
     <h2>About Scapy</h2>
     <h3>What is Scapy</h3> Scapy is a powerful interactive packet manipulation program. It is able to forge or decode packets of a wide number of protocols, send them on the wire, capture them, match requests and replies, and much more. It can easily handle most classical tasks like scanning, tracerouting, probing, unit tests, attacks or network discovery (it can replace hping, 85% of nmap, arpspoof, arp-sk, arping, tcpdump, tethereal, p0f, etc.). It also performs very well at a lot of other specific tasks that most other tools can't handle, like sending invalid frames, injecting your own 802.11 frames, combining technics (VLAN hopping+ARP cache poisoning, VOIP decoding on WEP encrypted channel, ...), etc. See <a href="http://scapy.readthedocs.io/en/latest/#interactive-tutorial">interactive tutorial</a> and <a href="demo.html">the quick demo: an interactive session (some examples may be outdated)</a>.
-    <h3>What makes scapy different from most other networking tools</h3> First, with most other tools, you won't build someting the author did not imagine. These tools have been built for a specific goal and can't deviate much from it. For example, an ARP cache poisoning program won't let you use double 802.1q encapsulation. Or try to find a program that can send, say, an ICMP packet with padding (I said padding, not payload, see?). In fact, each time you have a new need, you have to build a new tool.
+    <h3>What makes scapy different from most other networking tools</h3> First, with most other tools, you won't build something the author did not imagine. These tools have been built for a specific goal and can't deviate much from it. For example, an ARP cache poisoning program won't let you use double 802.1q encapsulation. Or try to find a program that can send, say, an ICMP packet with padding (I said padding, not payload, see?). In fact, each time you have a new need, you have to build a new tool.
     <p>
-        Second, they usually confuse decoding and interpreting. Machines are good at decoding and can help human beings with that. Interpretation is reserved to human beings. Some programs try to mimic this behaviour. For instance they say "this port is open" instead of "I received a SYN-ACK". Sometimes they are right. Sometimes not. It's easier for beginners, but when you know what you're doing, you keep on trying to deduce what really happened from the program's interpretation to make your own, which is hard because you lost a big amount of information. And you often end up using <kbd>tcpdump -xX</kbd> to decode and interpret what the tool missed.
+        Second, they usually confuse decoding and interpreting. Machines are good at decoding and can help human beings with that. Interpretation is reserved for human beings. Some programs try to mimic this behavior. For instance, they say "this port is open" instead of "I received a SYN-ACK". Sometimes they are right. Sometimes not. It's easier for beginners, but when you know what you're doing, you keep on trying to deduce what really happened from the program's interpretation to make your own, which is hard because you lost a big amount of information. And you often end up using <kbd>tcpdump -xX</kbd> to decode and interpret what the tool missed.
     </p>
     <p>
-        Third, even programs which only decode do not give you all the information they received. The network's vision they give you is the one their author thought was sufficient. But it is not complete, and you have a bias. For instance, do you know a tool that reports the padding ?
+        Third, even programs which only decode do not give you all the information they received. The network's vision they give you is the one their author thought was sufficient. But it is not complete, and you have a bias. For instance, do you know a tool that reports the padding?
     </p>
     <p>
-        Scapy tries to overcome those problems. It enables you to build exactly the packets you want. Even if I think stacking a 802.1q layer on top of TCP has no sense, it may have some for somebody else working on some product I don't know. Scapy has a flexible model that tries to avoid such arbitrary limits. You're free to put any value you want in any field you want, and stack them like you want. You're an adult after all.
+        Scapy tries to overcome those problems. It enables you to build exactly the packets you want. Even if I think stacking a 802.1q layer on top of TCP has no sense, it may have some for somebody else working on some product I don't know. Scapy has a flexible model that tries to avoid such arbitrary limits. You're free to put any value you want in any field you want and stack them like you want. You're an adult after all.
     </p>
     <p>
         In fact, it's like building a new tool each time, but instead of dealing with a hundred line C program, you only write 2 lines of Scapy.
@@ -57,8 +57,8 @@
     </p>
     <h2>Scapy Project</h2> Scapy runs natively on Linux, and on most Unixes with libpcap, libdnet and their respective python wrapper (see <a href="http://scapy.readthedocs.io/en/latest/installation.html">scapy's installation page</a>).
     <p>
-        Scapy &lt; 2.x needs Python 2.7, 3.4 or upcomming versions.
-        <br> Scapy &ge; 1.x needs Python 2.5 or upcomming versions, but does not support Python 3. However, Scapy 1.X is now deprecated.
+        Scapy &ge; 2.x needs Python 2.7, 3.4 or upcoming versions.
+        <br> Scapy &le; 1.x needs Python 2.5 or upcoming versions but does not support Python 3. However, Scapy 1.X is now deprecated.
     </p>
     <h3 id="download">
         Download
@@ -77,10 +77,10 @@
             Related projects
       </h3>
     <ul>
-        <li><a href="http://www.secdev.org/projects/scapytain/">Scapytain</a>: a web application to store, organise and run test campaigns on top of Scapy</li>
+        <li><a href="http://www.secdev.org/projects/scapytain/">Scapytain</a>: a web application to store, organize and run test campaigns on top of Scapy</li>
         <li><a href="http://www.secdev.org/projects/UTscapy/">UTscapy</a>: Unit Testing with scapy (integrated with Scapy 2.x)</li>
         <li><a href="http://sid.rstack.org/index.php/Wifitap_EN">WifiTap</a>: Wi-Fi traffic injection</li>
-        <li><a href="files/scapy-olsr.py">local copy of Scapy OLSR add-on</a></li>
+        <li><a href="files/scapy-olsr.py">The local copy of Scapy OLSR add-on</a></li>
     </ul>
     <h3 id="help">
             Help, documentation
