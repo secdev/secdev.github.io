@@ -74,7 +74,10 @@ The same code base now runs natively on both Python 2 and Python 3.
 *   [Scapytain](http://www.secdev.org/projects/scapytain/): a web application to store, organize and run test campaigns on top of Scapy
 *   [UTscapy](http://www.secdev.org/projects/UTscapy/): Unit Testing with scapy (integrated with Scapy 2.x)
 *   [WifiTap](http://sid.rstack.org/index.php/Wifitap_EN): Wi-Fi traffic injection
-*   [The local copy of Scapy OLSR add-on](files/scapy-olsr.py)
+
+### Other
+
+Scapy was forked in 2015 to [scapy3k](https://github.com/phaethon/scapy), aimed at python3-only support. The fork diverged now and has its own life. It should be renamed soon to avoid further confusion.
 
 ### Help, documentation
 
