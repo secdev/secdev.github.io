@@ -57,9 +57,11 @@ Scapy Project
 -------------
 
 Scapy runs natively on Linux, and on most Unixes with libpcap, libdnet and their respective python wrapper (see [scapy's installation page](http://scapy.readthedocs.io/en/latest/installation.html)).
+The same code base now runs natively on both Python 2 and Python 3.
 
-Scapy ≥ 2.x needs Python 2.7, 3.4 or upcoming versions.  
-Scapy ≤ 1.x needs Python 2.5 or upcoming versions but does not support Python 3. However, Scapy 1.X is now deprecated.
+* Scapy ≥ 2.4.x needs Python2 ≥ 2.7, or Python3 ≥ 3.4.
+* Scapy ≥ 2.x needs Python2 ≥ 2.7.
+* Scapy 1.x needs Python2 ≥ 2.5.  Scapy 1.x is now deprecated.
 
 ### Download
 
