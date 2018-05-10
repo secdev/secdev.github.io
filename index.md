@@ -77,7 +77,9 @@ The same code base now runs natively on both Python 2 and Python 3.
 
 ### Other
 
-Scapy was forked in 2015 to [scapy3k](https://github.com/phaethon/scapy), aimed at python3-only support. The fork diverged now and has its own life. It should be renamed soon to avoid further confusion.
+Scapy was forked in 2015 to [scapy3k](https://github.com/phaethon/scapy), aimed at python3-only support. The fork diverged now and has its own life.
+It has been packaged as python3-scapy in some distributions but it should not be the case anymore soon since Scapy supports Python3 in addition to Python2 since 2.4.0.
+scapy3k should be renamed soon to avoid further confusion.
 
 ### Help, documentation
 
