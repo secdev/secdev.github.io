@@ -22,6 +22,7 @@ Scapy
         <a href="https://gitter.im/secdev/scapy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="/img/badges/gitter.svg" alt="Join the chat at https://gitter.im/secdev/scapy" /></a>
     </li>
 </ul>
+{% endraw %}
 
 
 About Scapy
