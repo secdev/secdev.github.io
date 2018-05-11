@@ -133,6 +133,7 @@ Scapy development uses [Git](https://git-scm.com/) version control system. Scapy
 *   May miss packets under heavy load
 *   BPF filters do not work on PPP interfaces
 
+---
 
 {% raw %}
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
