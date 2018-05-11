@@ -1,10 +1,9 @@
 ---
 title: Scapy
+subtitle: Packet crafting for Python2 and Python3
 date: 2018
 ---
 
-Scapy
-=====
 
 {% raw %}
 <ul style="display:flex; list-style:none;">
@@ -26,7 +25,7 @@ Scapy
 
 
 About Scapy
------------
+===========
 
 ### What is Scapy
 
@@ -47,7 +46,7 @@ In fact, it's like building a new tool each time, but instead of dealing with a 
 After a probe (scan, traceroute, etc.) Scapy always gives you the full decoded packets from the probe, before any interpretation. That means that you can probe once and interpret many times, ask for a traceroute and look at the padding for instance.
 
 Scapy Project
--------------
+=============
 
 Scapy runs natively on Linux, and on most Unixes with libpcap, libdnet and their respective python wrapper (see [scapy's installation page](http://scapy.readthedocs.io/en/latest/installation.html)).
 The same code base now runs natively on both Python 2 and Python 3.
