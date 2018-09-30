@@ -78,7 +78,7 @@ packaged as python3-scapy in some distributions, and as scapy-python3
 on PyPI leading to confusion amongst users. It should not be the case
 anymore soon.  Scapy supports Python3 in addition to Python2 since
 2.4.0. Scapy v2.4.0 should be favored as the official Scapy code
-base. The fork will soon be renamed soon to avoid further confusion.
+base. The fork has been renamed as kamene.
 
 ### Help, documentation
 
