@@ -23,6 +23,23 @@ date: 2018
 </ul>
 {% endraw %}
 
+<link rel="stylesheet" href="/css/button.css">
+
+Scapy Project
+=============
+
+Scapy runs natively on Linux, and on most Unixes with libpcap and its python wrappers (see [scapy's installation page](http://scapy.readthedocs.io/en/latest/installation.html)).
+The same code base now runs natively on both Python 2 and Python 3.
+
+* Scapy ≥ 2.4.x needs Python2 ≥ 2.7, or Python3 ≥ 3.4.
+* Scapy ≥ 2.x needs Python2 ≥ 2.7.
+* Scapy 1.x needs Python2 ≥ 2.5.  Scapy 1.x is now deprecated.
+
+<div>
+    <a href="/download" class="button button_main">
+        DOWNLOAD SCAPY
+    </a>
+</div>
 
 About Scapy
 ===========
@@ -45,21 +62,6 @@ In fact, it's like building a new tool each time, but instead of dealing with a 
 
 After a probe (scan, traceroute, etc.) Scapy always gives you the full decoded packets from the probe, before any interpretation. That means that you can probe once and interpret many times, ask for a traceroute and look at the padding for instance.
 
-Scapy Project
-=============
-
-Scapy runs natively on Linux, and on most Unixes with libpcap, libdnet and their respective python wrapper (see [scapy's installation page](http://scapy.readthedocs.io/en/latest/installation.html)).
-The same code base now runs natively on both Python 2 and Python 3.
-
-* Scapy ≥ 2.4.x needs Python2 ≥ 2.7, or Python3 ≥ 3.4.
-* Scapy ≥ 2.x needs Python2 ≥ 2.7.
-* Scapy 1.x needs Python2 ≥ 2.5.  Scapy 1.x is now deprecated.
-
-### Download
-
-*   [Development repository](https://github.com/secdev/scapy/)
-*   [Scapy 2.4.0](https://github.com/secdev/scapy/archive/v2.4.0.zip)
-*   [PyPI](https://pypi.python.org/pypi/scapy/)
 
 ### Related projects
 

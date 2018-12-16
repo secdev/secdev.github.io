@@ -3,7 +3,7 @@ title: Quick demo - an interactive session
 date: 2018-04-19 14:00:00
 ---
 
-### Please also have a look at the [interactive tutorial](http://www.secdev.org/projects/scapy/doc/usage.html#interactive-tutorial) in the official documentation, that may be more up to date.
+### Please also have a look at the [interactive tutorial](https://scapy.readthedocs.io/en/latest/usage.html#interactive-tutorial) in the official documentation, that may be more up to date.
 
 If you are new to python and you really don't understand a word because of that, or if you want to learn this language, take an hour to read the very good tutorial from Guido Van Rossum here: [http://docs.python.org/tutorial/](http://docs.python.org/tutorial/). After that, you'll know python :) (really!). For a more in-depth tutorial [Dive Into Python](http://www.diveintopython.net/toc/index.html) is a very good start too.
 
