@@ -1,6 +1,7 @@
 ---
-title: Quick demo - an interactive session
-date: 2018-04-19 14:00:00
+title: Scapy quick demo
+subtitle: Quick demo - an interactive session
+date: 2019
 ---
 
 ### Please also have a look at the [interactive tutorial](https://scapy.readthedocs.io/en/latest/usage.html#interactive-tutorial) in the official documentation, that may be more up to date.
