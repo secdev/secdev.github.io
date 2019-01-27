@@ -1,29 +1,32 @@
 ---
 title: Scapy
 subtitle: Packet crafting for Python2 and Python3
-date: 2018
+date: 2019
 ---
 
-
 {% raw %}
-<ul style="display:flex; list-style:none;">
-    <!-- SVG files are text files: easy to update when needed -->
-    <li style="display: inline; margin-left: 10px;">
-        <a href="https://pypi.python.org/pypi/scapy/"><img src="/img/badges/scapyversion.svg" alt="Scapy" /></a>
+<ul style="display:flex; list-style:none; display: table; margin: 0 auto;">
+    <!-- We rely on different services to provide the .svg dynamically -->
+    <li style="display: inline; margin-left: 5px;">
+        <a href="https://pypi.python.org/pypi/scapy/"><img src="https://img.shields.io/pypi/v/scapy.svg" alt="Scapy" /></a>
     </li>
-    <li style="display: inline; margin-left: 10px;">
-        <a href="https://pypi.python.org/pypi/scapy/"><img src="/img/badges/pyversions.svg" alt="Scapy versions" /></a>
+    <li style="display: inline; margin-left: 5px;">
+        <a href="https://pypi.python.org/pypi/scapy/"><img src="https://img.shields.io/pypi/pyversions/scapy.svg" alt="Scapy versions" /></a>
     </li>
-    <li style="display: inline; margin-left: 10px;">
-        <a href="https://github.com/secdev/scapy/blob/master/LICENSE"><img src="/img/badges/gplv2.svg" alt="GPLv2" /></a>
+    <li style="display: inline; margin-left: 5px;">
+        <a href="https://github.com/secdev/scapy/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-GPL%20v2-blue.svg" alt="GPLv2" /></a>
     </li>
-    <li style="display: inline; margin-left: 10px;">
-        <a href="https://gitter.im/secdev/scapy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="/img/badges/gitter.svg" alt="Join the chat at https://gitter.im/secdev/scapy" /></a>
+    <li style="display: inline; margin-left: 5px;">
+        <a href="https://gitter.im/secdev/scapy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="https://badges.gitter.im/secdev/scapy.svg" alt="Join the chat at https://gitter.im/secdev/scapy" /></a>
+    </li>
+    <li style="display: inline; margin-left: 5px;">
+        <a href="https://repology.org/metapackage/scapy/versions"><img src="https://repology.org/badge/tiny-repos/scapy.svg" alt="Packaging status" /></a>
     </li>
 </ul>
 {% endraw %}
 
 <link rel="stylesheet" href="/css/button.css">
+<link rel="stylesheet" href="/css/table.css">
 
 Scapy Project
 =============
@@ -31,9 +34,11 @@ Scapy Project
 Scapy runs natively on Linux, and on most Unixes with libpcap and its python wrappers (see [scapy's installation page](http://scapy.readthedocs.io/en/latest/installation.html)).
 The same code base now runs natively on both Python 2 and Python 3.
 
-* Scapy ≥ 2.4.x needs Python2 ≥ 2.7, or Python3 ≥ 3.4.
-* Scapy ≥ 2.x needs Python2 ≥ 2.7.
-* Scapy 1.x needs Python2 ≥ 2.5.  Scapy 1.x is now deprecated.
+| Scapy version | Python 2 support | Python 3 support |
+| --- | --- | ---: |
+| 2.4.x+ | 2.7+ | 3.4+ |
+| 2.x | 2.7+ | None |
+{:.mbtablestyle}
 
 <div>
     <a href="/download" class="button button_main">
@@ -122,10 +127,7 @@ Scapy development uses [Git](https://git-scm.com/) version control system. Scapy
 
 #### Ongoing developments
 
-*   IPv6
-*   Session management
-*   Bluetooth
-*   ...
+Head over to [Scapy's GitHub Projects](https://github.com/secdev/scapy/projects) to see what is being worked on.
 
 #### Known bugs
 
