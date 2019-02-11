@@ -100,9 +100,8 @@ Send questions, bug reports, suggestions, ideas, cool usages of Scapy, etc. To a
 
 *   [**Official Online HTML documentation**](http://scapy.readthedocs.io/)
 *   [Security Power Tools](http://www.oreilly.com/catalog/9780596009632/) where Philippe Biondi wrote a complete chapter about Scapy.
-*   [Quick demo: an interactive session](/demo/)
-*   [Building your own tools with Scapy](/build-your-own-tools/)
 *   [Scapy's installation page](http://scapy.readthedocs.io/en/latest/installation.html)
+*   [ThePacketGeek's Building Network Tools with Scapy tutorial](https://thepacketgeek.com/series/building-network-tools-with-scapy/)
 *   You will also find an article in the French [Linux Magazine #52](http://www.linuxmag-france.org/produit.php?produit=107)
 *   [Report bugs/wishes/patches here](https://github.com/secdev/scapy/issues/new)
 *   [Active tickets here](https://github.com/secdev/scapy/issues)
@@ -118,8 +117,7 @@ Send questions, bug reports, suggestions, ideas, cool usages of Scapy, etc. To a
 
 #### Other documents on Scapy :
 
-*   A Scapy tutorial: [Packet Wizardry: Ruling the Network with Python](http://packetstorm.linuxsecurity.com/papers/general/blackmagic.txt) by Rob klein Gunnewiek.
-*   [(now outdated) Scapy installation on OpenBSD 3.8 howto](http://pierre.droids-corp.org/scapy/README.openbsd)
+*   [(french) @p-l- blog posts on scapy](http://pierre.droids-corp.org/blog/html/tags/scapy.html)
 
 ### Development
 
@@ -131,8 +129,6 @@ Head over to [Scapy's GitHub Projects](https://github.com/secdev/scapy/projects)
 
 #### Known bugs
 
-*   Link layer not well managed yet
-*   DNS packets not reassembled exactly as the original (no compression used)
 *   May miss packets under heavy load
 *   BPF filters do not work on PPP interfaces
 
