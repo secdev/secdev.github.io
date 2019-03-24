@@ -28,3 +28,7 @@ date: 2019
         </div>
     </a>
 </div>
+
+## Python versions support
+
+<img src="https://raw.githubusercontent.com/secdev/scapy/master/doc/scapy/graphics/scapy_version_timeline.jpg" alt="Scapy versions" />

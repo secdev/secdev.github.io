@@ -26,8 +26,6 @@ navbar-links:
   Home: index
   Downloads: download/
   Documentation: http://scapy.readthedocs.io/
-  Demo: demo/
-  Build your own tools: build-your-own-tools/
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar

@@ -34,45 +34,21 @@ Scapy Project
 Scapy runs natively on Linux, and on most Unixes with libpcap and its python wrappers (see [scapy's installation page](http://scapy.readthedocs.io/en/latest/installation.html)).
 The same code base now runs natively on both Python 2 and Python 3.
 
-| Scapy version | Python 2 support | Python 3 support |
-| --- | --- | ---: |
-| 2.4.x+ | 2.7+ | 3.4+ |
-| 2.x | 2.7+ | None |
-{:.mbtablestyle}
-
+{% raw %}
 <div>
     <a href="/download" class="button button_main">
         DOWNLOAD SCAPY
     </a>
 </div>
+{% endraw %}
 
-About Scapy
-===========
-
-### What is Scapy
-
-Scapy is a powerful interactive packet manipulation program. It is able to forge or decode packets of a wide number of protocols, send them on the wire, capture them, match requests and replies, and much more. It can easily handle most classical tasks like scanning, tracerouting, probing, unit tests, attacks or network discovery (it can replace hping, 85% of nmap, arpspoof, arp-sk, arping, tcpdump, tethereal, p0f, etc.). It also performs very well at a lot of other specific tasks that most other tools can't handle, like sending invalid frames, injecting your own 802.11 frames, combining technics (VLAN hopping+ARP cache poisoning, VOIP decoding on WEP encrypted channel, ...), etc. See [interactive tutorial](http://scapy.readthedocs.io/en/latest/#interactive-tutorial) and [the quick demo: an interactive session (some examples may be outdated)](/demo/).
-
-### What makes scapy different from most other networking tools
-
-First, with most other tools, you won't build something the author did not imagine. These tools have been built for a specific goal and can't deviate much from it. For example, an ARP cache poisoning program won't let you use double 802.1q encapsulation. Or try to find a program that can send, say, an ICMP packet with padding (I said padding, not payload, see?). In fact, each time you have a new need, you have to build a new tool.
-
-Second, they usually confuse decoding and interpreting. Machines are good at decoding and can help human beings with that. Interpretation is reserved for human beings. Some programs try to mimic this behavior. For instance, they say "this port is open" instead of "I received a SYN-ACK". Sometimes they are right. Sometimes not. It's easier for beginners, but when you know what you're doing, you keep on trying to deduce what really happened from the program's interpretation to make your own, which is hard because you lost a big amount of information. And you often end up using tcpdump -xX to decode and interpret what the tool missed.
-
-Third, even programs which only decode do not give you all the information they received. The network's vision they give you is the one their author thought was sufficient. But it is not complete, and you have a bias. For instance, do you know a tool that reports the padding?
-
-Scapy tries to overcome those problems. It enables you to build exactly the packets you want. Even if I think stacking a 802.1q layer on top of TCP has no sense, it may have some for somebody else working on some product I don't know. Scapy has a flexible model that tries to avoid such arbitrary limits. You're free to put any value you want in any field you want and stack them like you want. You're an adult after all.
-
-In fact, it's like building a new tool each time, but instead of dealing with a hundred line C program, you only write 2 lines of Scapy.
-
-After a probe (scan, traceroute, etc.) Scapy always gives you the full decoded packets from the probe, before any interpretation. That means that you can probe once and interpret many times, ask for a traceroute and look at the padding for instance.
-
+{: .box-note}
+## [Get started with Scapy](https://scapy.readthedocs.io/en/latest/introduction.html)
 
 ### Related projects
 
-*   [Scapytain](http://www.secdev.org/projects/scapytain/): a web application to store, organize and run test campaigns on top of Scapy
-*   [UTscapy](http://www.secdev.org/projects/UTscapy/): Unit Testing with scapy (integrated with Scapy 2.x)
-*   [WifiTap](http://sid.rstack.org/index.php/Wifitap_EN): Wi-Fi traffic injection
+*   [UTscapy](http://www.secdev.org/projects/UTscapy/): Unit Testing with scapy (shipped with Scapy 2.X+)
+*   [Scapytain](http://www.secdev.org/projects/scapytain/): a web application to store, organize and run test campaigns on top of Scapy (low project activity)
 
 ### Other
 
@@ -89,20 +65,21 @@ base. The fork has been renamed as kamene.
 
 ### Help, documentation
 
-#### Mailing-list
 
-Send questions, bug reports, suggestions, ideas, cool usages of Scapy, etc. To avoid spam, you must subscribe to the mailing list to post.
+### Development
 
-*   To subscribe to the mailing-list, send a mail to scapy.ml-subscribe(at)secdev.org
-*   To send a mail to the mailing-list: scapy.ml(at)secdev.org
+Scapy development uses [Git](https://git-scm.com/) version control system. Scapy reference repository is at [https://github.com/secdev/scapy/](https://github.com/secdev/scapy/).
+It provides the ticket management service used for submitting patches or bugs.
+You can [report a bug](https://github.com/secdev/scapy/issues) or [create a PR](https://github.com/secdev/scapy/pulls)
+
+Head over to [Scapy's GitHub Projects](https://github.com/secdev/scapy/projects) to see what is being worked on.
 
 #### Documents
 
 *   [**Official Online HTML documentation**](http://scapy.readthedocs.io/)
-*   [Security Power Tools](http://www.oreilly.com/catalog/9780596009632/) where Philippe Biondi wrote a complete chapter about Scapy.
 *   [Scapy's installation page](http://scapy.readthedocs.io/en/latest/installation.html)
 *   [ThePacketGeek's Building Network Tools with Scapy tutorial](https://thepacketgeek.com/series/building-network-tools-with-scapy/)
-*   You will also find an article in the French [Linux Magazine #52](http://www.linuxmag-france.org/produit.php?produit=107)
+*   [Security Power Tools](http://www.oreilly.com/catalog/9780596009632/) where Philippe Biondi wrote a complete chapter about Scapy.
 *   [Report bugs/wishes/patches here](https://github.com/secdev/scapy/issues/new)
 *   [Active tickets here](https://github.com/secdev/scapy/issues)
 
@@ -115,17 +92,17 @@ Send questions, bug reports, suggestions, ideas, cool usages of Scapy, etc. To a
 *   [Scapy's CanSecWest/core05 slides](/conf/scapy_csw05.pdf)
 *   [Scapy's LSM 2003 slides](/conf/scapy_lsm2003.pdf)
 
-#### Other documents on Scapy :
+#### Other documents about Scapy :
 
 *   [(french) @p-l- blog posts on scapy](http://pierre.droids-corp.org/blog/html/tags/scapy.html)
+*   You will also find an article in the French [Linux Magazine #52](http://www.linuxmag-france.org/produit.php?produit=107)
 
-### Development
+#### Mailing-list (very low activity)
 
-Scapy development uses [Git](https://git-scm.com/) version control system. Scapy reference repository is at [https://github.com/secdev/scapy/](https://github.com/secdev/scapy/). It provides a ticket management service that I use to avoid forgetting patches or bugs.
+Send questions, bug reports, suggestions, ideas, cool usages of Scapy, etc. To avoid spam, you must subscribe to the mailing list to post.
 
-#### Ongoing developments
-
-Head over to [Scapy's GitHub Projects](https://github.com/secdev/scapy/projects) to see what is being worked on.
+*   To subscribe to the mailing-list, send a mail to scapy.ml-subscribe(at)secdev.org
+*   To send a mail to the mailing-list: scapy.ml(at)secdev.org
 
 #### Known bugs
 
