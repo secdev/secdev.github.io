@@ -1,0 +1,283 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/carsec.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Some extra themes for this presentation -->
+        <style>
+
+.bg-r { background-color: #e6b8af; }
+.bg-y { background-color: #fff2cc; }
+.bg-g { background-color: #d9ead3; }
+.bg-b { background-color: #cfe2f3; }
+.bg-p { background-color: #d9d2e9; }
+
+span.data-bytes {
+    background-color: #ddd;
+}
+
+span.isotp-bytes {
+    background-color: #9d9;
+    color:#604;
+    padding: 2px;
+    font-weight: bold;
+}
+
+.video-controls {
+   width:100%;
+   height:8.0971659919028340080971659919028%; /* of figure's height */
+   position: relative;
+}
+
+.video-controls > * {
+   float:left;
+   width:3.90625%;
+   height:100%;
+   margin-left:0.1953125%;
+   display:block;
+}
+
+.video-controls > *:first-child {
+   margin-left:0;
+}
+
+.video-controls .video-progress {
+   cursor:pointer;
+   width:84.390625%;
+}
+
+.video-controls progress {
+   display:block;
+   width:100%;
+   height:81%;
+   margin-top:0.125rem;
+   border:none;
+   color:#0095dd;
+   -moz-border-radius:2px;
+   -webkit-border-radius:2px;
+   border-radius:2px;
+}
+
+.video-controls progress[data-state="fake"] {
+   background:#e6e6e6;
+   height:65%;
+}
+
+.video-controls progress span {
+   width:0%;
+   height:100%;
+   display:inline-block;
+   background-color:#2a84cd;  
+}
+
+.video-controls progress::-moz-progress-bar {
+   background-color:#0095dd;
+}
+
+.video-controls progress::-webkit-progress-value {
+   background-color:#0095dd;
+}
+
+.video-controls button {
+   border:none;
+   cursor:pointer;
+   background:transparent;
+   background-size:contain;
+   background-repeat:no-repeat;
+}
+
+.video-controls button:hover, .video-controls button:focus {
+   opacity:0.5;
+}
+
+        </style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+        <div class="reveal">
+            <div class="slides">
+                <section data-markdown data-background-size=900px data-background="images/scapy_logo.png" data-separator="^---$" data-separator-vertical="^\n\n\n">
+<script type="text/markdown">
+                    
+# Automotive Penetration Testing with Scapy
+
+** Nils Weiss | Enrico Pozzobon **
+
+nils@we155.de | enrico@epozzobon.it
+
+</script>
+                </section>
+                <section data-markdown="presentation.md" data-separator="^---$" data-separator-vertical="^\n\n"></section>
+            </div>
+        </div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+// More info about config & dependencies:
+// - https://github.com/hakimel/reveal.js#configuration
+// - https://github.com/hakimel/reveal.js#dependencies
+let myScale = 2/3;
+Reveal.initialize({
+    width: 1920 * myScale,
+    height: 1080 * myScale,
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+    dependencies: [
+        { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'plugin/notes/notes.js', async: true },
+        { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: 'plugin/sequence-diagrams/webfont.js' },
+        { src: 'plugin/sequence-diagrams/snap.svg-min.js' },
+        { src: 'plugin/sequence-diagrams/underscore-min.js' },
+        { src: 'plugin/sequence-diagrams/sequence-diagram-min.js' },
+        { src: 'plugin/sequence-diagrams/sequence-diagrams-plugin.js' },
+    ]
+});
+
+Reveal.addEventListener('ready', function(event) {
+    const videos = Array.from(window.document.getElementsByTagName('video'));
+    videos.forEach(v => {
+        v.classList.remove("stertch");
+        v.style.width = "100%";
+        v.style.height = "100%";
+        v.controls = false;
+
+        const figure = window.document.createElement('figure');
+        figure.classList.add("stretch");
+        v.parentNode.replaceChild(figure, v);
+        figure.appendChild(v);
+
+        const controlsDiv = window.document.createElement('div');
+        controlsDiv.classList.add("video-controls");
+        figure.appendChild(controlsDiv);
+
+        const playButton = window.document.createElement('button');
+        playButton.innerText = "Play";
+        controlsDiv.appendChild(playButton);
+
+        const pauseButton = window.document.createElement('button');
+        pauseButton.innerText = "Pause";
+        controlsDiv.appendChild(pauseButton);
+
+        const progressDiv = window.document.createElement('div');
+        progressDiv.classList.add("video-progress");
+        controlsDiv.appendChild(progressDiv);
+
+        const progressProg = window.document.createElement('progress');
+        progressProg.value = 0;
+        progressProg.setAttribute("min", 0);
+        progressDiv.appendChild(progressProg);
+
+        const progressBar = window.document.createElement('span');
+        progressProg.appendChild(progressBar);
+
+        const fullScreenButton = window.document.createElement('button');
+        fullScreenButton.innerText = "Fullscreen";
+        controlsDiv.appendChild(fullScreenButton);
+        
+        playButton.addEventListener('click', event => v.play());
+
+        pauseButton.addEventListener('click', event => v.pause());
+
+        v.addEventListener('click', event => {
+            if (v.paused || v.ended) {
+                v.play();
+            } else {
+                v.pause();
+            }
+        });
+
+        progressProg.addEventListener('click', function(e) {
+            var scale = Math.max(1, Reveal.getScale())
+            var barLeft = this.getBoundingClientRect().left;
+            var barRight = this.getBoundingClientRect().right;
+            var mouseX = e.clientX / scale;
+            var pos = (mouseX - barLeft) / (barRight - barLeft);
+            v.currentTime = pos * v.duration;
+        });
+
+        fullScreenButton.addEventListener('click', event => {
+            var fullScreenEnabled = !!(document.fullscreenEnabled 
+                || document.mozFullScreenEnabled 
+                || document.msFullscreenEnabled 
+                || document.webkitSupportsFullscreen 
+                || document.webkitFullscreenEnabled 
+                || document.createElement('video').webkitRequestFullScreen);
+
+            var isFullScreen = function() {
+                return !!(document.fullScreen 
+                || document.webkitIsFullScreen 
+                || document.mozFullScreen 
+                || document.msFullscreenElement 
+                || document.fullscreenElement);
+            }
+
+            if (isFullScreen()) {
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+                else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
+                else if (document.msExitFullscreen) document.msExitFullscreen();
+                setFullscreenData(false);
+            }
+            else {
+                if (figure.requestFullscreen) figure.requestFullscreen();
+                else if (figure.mozRequestFullScreen) figure.mozRequestFullScreen();
+                else if (figure.webkitRequestFullScreen) figure.webkitRequestFullScreen();
+                else if (figure.msRequestFullscreen) figure.msRequestFullscreen();
+                setFullscreenData(true);
+            }
+        });
+
+        v.addEventListener('timeupdate', () => {
+            progressProg.setAttribute('max', v.duration);
+            progressProg.value = v.currentTime;
+            progressBar.style.width = Math.floor((v.currentTime / v.duration) * 100) + '%';
+        });
+
+        v.addEventListener('loadedmetadata', () => {
+            progressProg.setAttribute('max', v.duration);
+        });
+
+        function setFullscreenData(state) {
+            figure.setAttribute('data-fullscreen', !!state);
+        }
+
+        document.addEventListener('fullscreenchange', function(e) {
+            setFullscreenData(!!(document.fullScreen || document.fullscreenElement));
+        });
+        document.addEventListener('webkitfullscreenchange', function() {
+            setFullscreenData(!!document.webkitIsFullScreen);
+        });
+        document.addEventListener('mozfullscreenchange', function() {
+            setFullscreenData(!!document.mozFullScreen);
+        });
+        document.addEventListener('msfullscreenchange', function() {
+            setFullscreenData(!!document.msFullscreenElement);
+        });
+    });
+});
+        </script>
+	</body>
+</html>

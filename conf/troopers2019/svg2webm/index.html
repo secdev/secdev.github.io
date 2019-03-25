@@ -1,0 +1,94 @@
+<html>
+    <body>
+        <p><span id="remaining">?</span> animations left to convert</p>
+        <p>Current animation is <span id="current">?</span></p>
+        <p>Progress is <span id="progress">?</span>%</p>
+        <object style="display: none" type="text/svg+xml" id="target-obj"></object>
+        <script>"use strict";
+
+const renderSvg = require("./CanvasRecorder.js")
+const fs = require("fs");
+
+const animationsDir = './animations';
+
+let svgFiles = fs.readdirSync(animationsDir);
+svgFiles = svgFiles.filter(x => x.endsWith('.svg'));
+
+const remainingLabel = document.getElementById('remaining');
+const currentLabel = document.getElementById('current');
+const progressLabel = document.getElementById('progress');
+
+console.log("SVG files to render: ", svgFiles);
+
+function deblob(blob, callback) {
+    const fileReader = new FileReader();
+    fileReader.onload = function() {
+        const bytes = new Uint8Array(this.result);
+        callback(Buffer.from(bytes));
+    };
+    fileReader.readAsArrayBuffer(blob);
+}
+
+function renderNextSvg() {
+    remainingLabel.innerText = svgFiles.length;
+    if (!(svgFiles.length > 0)) {
+        return;
+    }
+    const fileName = svgFiles.pop();
+    currentLabel.innerText = fileName;
+    progressLabel.innerText = 0;
+
+    const svgPath = animationsDir + "/" + fileName;
+    const outputPath = svgPath + ".webm";
+    if (fs.existsSync(outputPath)) {
+        console.log(`target "${outputPath}" already exists`);
+        renderNextSvg();
+        return;
+    }
+    fs.writeFileSync(outputPath, Buffer.from("tmp"));
+
+    const targetObj = document.createElement('object');
+    const oldObj = document.getElementById('target-obj');
+
+    targetObj.style.visibility = "hidden";
+    targetObj.type = "text/svg+xml";
+    targetObj.id = "target-obj";
+    targetObj.data = svgPath;
+    targetObj.addEventListener("load", () => {
+        const canvas = document.createElement('canvas');
+        const rendering = renderSvg(targetObj.contentDocument, canvas, (frameNum, callback) => {
+            var img = canvas.toBlob((blob) => {
+                deblob(blob, function(buffer) {
+                    let outName = outputPath + "." + frameNum + ".png";
+                    console.log("writing " + outName)
+                    fs.writeFileSync(outName, buffer);
+                    callback();
+                });
+            });
+        });
+
+        rendering.on('progress', progress => {
+            let percent = ((progress * 100 * 100) | 0) / 100;
+            progressLabel.innerText = percent;
+            console.log(percent + " %")
+        });
+
+        rendering.on('finish', blob => {
+            if (!blob) {
+                renderNextSvg();
+            } else {
+                deblob(blob, function(buffer) {
+                    fs.writeFileSync(outputPath, buffer);
+                    renderNextSvg();
+                });
+            }
+        });
+    });
+    oldObj.parentNode.replaceChild(targetObj, oldObj);
+}
+
+renderNextSvg();
+
+        </script>
+    </body>
+</html>

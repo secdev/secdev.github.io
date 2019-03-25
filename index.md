@@ -85,6 +85,7 @@ Head over to [Scapy's GitHub Projects](https://github.com/secdev/scapy/projects)
 
 #### Slides
 
+*   [Automotive Penetration Testing with Scapy - Troopers 2019 slides](https://scapy.net/conf/troopers2019/index.html)
 *   [Scapy's PacSec/core05 slides](/conf/scapy_pacsec05.pdf) ([printable version](/conf/scapy_pacsec05.handout.pdf))
 *   [Scapy's Hack.lu 2005 slides](/conf/scapy_hack.lu.pdf)
 *   [Scapy's Summerschool Applied IT Security 2005 slides](/conf/scapy_Aachen.pdf)
