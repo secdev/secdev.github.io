@@ -25,8 +25,8 @@ date: 2019
 </ul>
 {% endraw %}
 
-<link rel="stylesheet" href="/css/button.css">
-<link rel="stylesheet" href="/css/table.css">
+<link rel="stylesheet" href="./css/button.css">
+<link rel="stylesheet" href="./css/table.css">
 
 Scapy Project
 =============
@@ -36,7 +36,7 @@ The same code base now runs natively on both Python 2 and Python 3.
 
 {% raw %}
 <div>
-    <a href="/download" class="button button_main">
+    <a href="./download" class="button button_main">
         DOWNLOAD SCAPY
     </a>
 </div>
