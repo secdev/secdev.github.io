@@ -4,7 +4,7 @@ subtitle: Download scapy on GitHub or PyPI
 date: 2019
 ---
 
-<link rel="stylesheet" href="/css/button.css">
+<link rel="stylesheet" href="./css/button.css">
 
 # Download scapy:
 
