@@ -4,7 +4,7 @@ subtitle: Download scapy on GitHub or PyPI
 date: 2019
 ---
 
-<link rel="stylesheet" href="./css/button.css">
+<link rel="stylesheet" href="../css/button.css">
 
 # Download scapy:
 
@@ -23,7 +23,7 @@ date: 2019
     </a>
     <a href="https://github.com/secdev/scapy/archive/master.zip" class="button">
         <div>
-            <img src="/img/logo.png">
+            <img src="../img/logo.png">
             <p class="button_text">Development version</p>
         </div>
     </a>
