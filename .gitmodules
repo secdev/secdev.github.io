@@ -1,0 +1,3 @@
+[submodule "awesome-scapy"]
+	path = awesome-scapy
+	url = https://github.com/secdev/awesome-scapy.git
