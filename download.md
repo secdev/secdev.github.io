@@ -21,7 +21,7 @@ date: 2019
             <p class="button_text">Download through PyPi</p>
         </div>
     </a>
-    <a href="https://github.com/secdev/scapy/archive/master.zip" class="button">
+    <a href="https://scapy.readthedocs.io/en/latest/installation.html#current-development-version" class="button">
         <div>
             <img src="../img/logo.png">
             <p class="button_text">Development version</p>
