@@ -25,8 +25,8 @@ date: 2019
 </ul>
 {% endraw %}
 
-<link rel="stylesheet" href="./css/button.css">
-<link rel="stylesheet" href="./css/table.css">
+<link rel="stylesheet" href="./assets/css/button.css">
+<link rel="stylesheet" href="./assets/css/table.css">
 
 Scapy Project
 =============
@@ -45,7 +45,7 @@ The same code base now runs natively on both Python 2 and Python 3.
 {: .box-note}
 ## [Get started with Scapy](https://scapy.readthedocs.io/en/latest/introduction.html)
 
-![Scapy installation](./img/animation-scapy-install.svg)
+![Scapy installation](./assets/img/animation-scapy-install.svg)
 
 ## Help, documentation
 
