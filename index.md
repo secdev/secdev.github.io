@@ -100,19 +100,6 @@ Send questions, bug reports, suggestions, ideas, cool usages of Scapy, etc. To a
 *   [UTscapy](http://www.secdev.org/projects/UTscapy/): Unit Testing with scapy (shipped with Scapy 2.X+)
 *   [Scapytain](http://www.secdev.org/projects/scapytain/): a web application to store, organize and run test campaigns on top of Scapy (low project activity)
 
-### Other
-
-An independent fork of Scapy was created from v2.2.0 in 2015, aimed at
-supporting only Python3 (<a rel="nofollow"
-href="https://github.com/phaethon/scapy">scapy3k</a>). The fork
-diverged, did not follow evolutions and fixes, and has had its own
-life without contributions back to Scapy. Unfortunately, it has been
-packaged as python3-scapy in some distributions, and as scapy-python3
-on PyPI leading to confusion amongst users. It should not be the case
-anymore soon.  Scapy supports Python3 in addition to Python2 since
-2.4.0. Scapy v2.4.0 should be favored as the official Scapy code
-base. The fork has been renamed as kamene.
-
 ---
 
 {% raw %}
