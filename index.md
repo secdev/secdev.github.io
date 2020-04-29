@@ -45,7 +45,7 @@ The same code base now runs natively on both Python 2 and Python 3.
 {: .box-note}
 ## [Get started with Scapy](https://scapy.readthedocs.io/en/latest/introduction.html)
 
-![Scapy installation](./assets/img/animation-scapy-install.svg)
+![Scapy installation](./files/doc/animation-scapy-install.svg)
 
 ## Help, documentation
 
