@@ -31,7 +31,9 @@ date: 2019
 
 ## Python versions support
 
-<img src="https://raw.githubusercontent.com/secdev/scapy/master/doc/scapy/graphics/scapy_version_timeline.jpg" alt="Scapy versions" />
+<div id="table_div" style="text-align:center;"></div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="../assets/js/scapy_versions.js"></script>
 
 ## Alternative methods
 
