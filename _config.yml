@@ -8,6 +8,10 @@ baseurl: ""
 title: Scapy
 description: Scapy - the Python-based interactive packet manipulation program & library.
 
+# Beautiful-Jekyll is MIT so nothing prevents us from doing this.
+# What kind of OSS is this, I contributed quite a lot to this project
+remove-ads: true
+
 # --- Navigation bar options --- #
 
 navbar-links:

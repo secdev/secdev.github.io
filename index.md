@@ -1,7 +1,6 @@
 ---
 title: Scapy
 subtitle: Packet crafting for Python2 and Python3
-date: 2019
 ---
 
 {% raw %}
@@ -25,27 +24,54 @@ date: 2019
 </ul>
 {% endraw %}
 
-<link rel="stylesheet" href="./assets/css/button.css">
-<link rel="stylesheet" href="./assets/css/table.css">
-
 Scapy Project
 =============
 
-Scapy runs natively on Linux, and on most Unixes with libpcap and its python wrappers (see [scapy's installation page](http://scapy.readthedocs.io/en/latest/installation.html)).
+### What is Scapy?
+
+Scapy is a powerful interactive packet manipulation program. It is able to
+forge or decode packets of a wide number of protocols, send them on the wire,
+capture them, match requests and replies, and much more. It can easily handle
+most classical tasks like scanning, tracerouting, probing, unit tests, attacks
+or network discovery (it can replace hping, 85% of nmap, arpspoof, arp-sk,
+arping, tcpdump, tethereal, p0f, etc.). It also performs very well at a lot of
+other specific tasks that most other tools can't handle, like sending invalid
+frames, injecting your own 802.11 frames, combining technics (VLAN hopping+ARP
+cache poisoning, VOIP decoding on WEP encrypted channel, ...), etc.
+
+Scapy runs natively on Linux, Windows, OSX and on most Unixes with libpcap (see [scapy's installation page](http://scapy.readthedocs.io/en/latest/installation.html)).
 The same code base now runs natively on both Python 2 and Python 3.
 
 {% raw %}
-<div>
-    <a href="./download" class="button button_main">
-        DOWNLOAD SCAPY
+<div class="d-flex justify-content-center">
+    <a href="./download" class="btn btn-primary btn-lg mr-2">
+        Download Scapy
+    </a>
+    <a href="https://scapy.readthedocs.io/en/latest/introduction.html" class="btn btn-primary btn-lg">
+        Get started with Scapy
     </a>
 </div>
 {% endraw %}
 
-{: .box-note}
-## [Get started with Scapy](https://scapy.readthedocs.io/en/latest/introduction.html)
+### Shell demo
 
-![Scapy installation](./files/doc/animation-scapy-install.svg)
+```python
+$ sudo ./run_scapy -H
+Welcome to Scapy (2.4.4.dev221)
+>>> p = IP(dst="github.com")/ICMP()
+>>> p
+<IP  frag=0 proto=icmp dst=Net('github.com') |<ICMP  |>>
+>>> r = sr1(p)
+Begin emission:
+Finished sending 1 packets.
+.*
+Received 2 packets, got 1 answers, remaining 0 packets
+>>> r
+<IP  version=4 ihl=5 tos=0x0 len=28 id=59762 flags= frag=0 ttl=57 proto=icmp
+chksum=0x7792 src=140.82.121.4 dst=217.25.178.5 |<ICMP  type=echo-reply
+code=0 chksum=0xffff id=0x0 seq=0x0 |>>
+```
+
 
 ## Help, documentation
 
@@ -102,12 +128,4 @@ Send questions, bug reports, suggestions, ideas, cool usages of Scapy, etc. To a
 
 ---
 
-{% raw %}
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-    If you like Scapy, you can
-    <input type="hidden" name="cmd" value="_s-xclick">
-    <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
-    <input style="vertical-align:middle; border:0" type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!">
-    <img alt="" style="border: 0" src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
-</form>
-{% endraw %}
+If you like Scapy, you can [sponsor us on Github](https://github.com/secdev/scapy#sponsor-button-repo)
