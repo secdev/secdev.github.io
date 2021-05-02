@@ -107,7 +107,7 @@ It provides the ticket management service used for submitting patches or bugs.
 #### Other documents about Scapy :
 
 *   [(french) @p-l- blog posts on scapy](http://pierre.droids-corp.org/blog/html/tags/scapy.html)
-*   You will also find an article in the French [Linux Magazine #52](http://www.linuxmag-france.org/produit.php?produit=107)
+*   You will also find an article in the French [Linux Magazine #52](https://boutique.ed-diamond.com/numeros-deja-parus/354-misc52.html)
 
 #### Mailing-list (very low activity)
 
