@@ -96,6 +96,7 @@ It provides the ticket management service used for submitting patches or bugs.
 
 #### Slides
 
+*   [Automotive Network Scans with Scapy - Troopers 2022 slides](/conf/troopers2022/main.slides.html)
 *   [Automotive Penetration Testing with Scapy - Troopers 2019 slides](/conf/troopers2019/index.html)
 *   [Scapy's PacSec/core05 slides](/conf/scapy_pacsec05.pdf) ([printable version](/conf/scapy_pacsec05.handout.pdf))
 *   [Scapy's Hack.lu 2005 slides](/conf/scapy_hack.lu.pdf)
