@@ -42,9 +42,14 @@ subtitle: Download scapy on GitHub or PyPI
 
 ## Python versions support
 
-<div id="table_div" style="text-align:center;"></div>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" src="../assets/js/scapy_versions.js"></script>
+|Scapy version|Python 2.2-2.6|Python 2.7|Python 3.4-3.6|Python 3.7|Python 3.8|Python 3.9|Python 3.10-3.11|
+|:----|:----|:----|:----|:----|:----|:----|:----|
+|2.3.3|✅|✅|❌|❌|❌|❌|❌|
+|2.4.0|❌|✅|✅|❌|❌|❌|❌|
+|2.4.2|❌|✅|✅|✅|❌|❌|❌|
+|2.4.3-2.4.4|❌|✅|✅|✅|✅|❌|❌|
+|2.4.5|❌|✅|✅|✅|✅|✅|❌|
+|2.5.0|❌|✅|✅|✅|✅|✅|✅|
 
 ## Alternative methods
 
