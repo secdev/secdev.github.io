@@ -89,9 +89,7 @@
           <v-card variant="tonal">
             <v-card-title>Documentation</v-card-title>
             <v-card-text class="text-body-2">
-              <v-btn href="http://scapy.readthedocs.io/">
-                Official Documentation
-              </v-btn>
+              The followings are good heads
             </v-card-text>
           </v-card>
         </v-col>
