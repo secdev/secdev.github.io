@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import 'animate.css';
-
 import { useDisplay } from 'vuetify';
-import { watchEffect, onMounted, ref } from 'vue';
+import { watchEffect, onMounted, onBeforeUnmount, ref } from 'vue';
 import type { Ref } from 'vue'
 
 const logo_big = `\
@@ -38,13 +36,16 @@ P /SCS/CCS        ACS
 `;
 
 const logoText = ref('');
-const { mobile } = useDisplay();
+const fontSize = ref('1em');
+const { smAndDown } = useDisplay();
 watchEffect(() => {
         /* Select proper logo based on display size */
-        if (mobile.value) {
+        if (smAndDown.value) {
                 logoText.value = logo_mini;
+                fontSize.value = '0.7em';
         } else {
                 logoText.value = logo_big;
+                fontSize.value = '1em';
         }
 });
 
@@ -74,17 +75,22 @@ function calcLogo() {
 }
 
 /* Load logo, then refresh again every 100ms */
+let interval: ReturnType<typeof setInterval>;
 onMounted(() => {
         logo.value = calcLogo();
-        setInterval(() => {
+        interval = setInterval(() => {
                 logo.value = calcLogo();
         }, 100);
+});
+onBeforeUnmount(() => {
+        clearInterval(interval);
 });
 </script>
 
 <template>
-        <v-container class="fill-height pa-4">
-                <div class="text-justify fill-height scapy-logo" v-html="logo">
+        <v-container class="fill-height px-0">
+                <!-- Only show arriving animation on bigger screens -->
+                <div :class="'text-justify fill-height scapy-logo' + (smAndDown ? ' mini' : '')" v-html="logo">
                 </div>
         </v-container>
 </template>
@@ -96,9 +102,14 @@ onMounted(() => {
         white-space: pre;
         /* Monospace font */
         font-family: Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace;
-        /* Animation - see below */
-        animation: zoomInLeft 1s, breath 8s ease-in-out 1s infinite;
+        font-size: v-bind(fontSize);
+        /* Animation */
         transition: transform 2s ease-out 100ms;
+        animation: zoomInLeft 1s, breath 8s ease-in-out 1s infinite;
+}
+
+.scapy-logo.mini {
+        animation: breath 8s ease-in-out infinite !important;
 }
 
 /* Slight breathing animation */
@@ -148,7 +159,7 @@ $beatSize: 0.9;
         }
 
         100% {
-                transform: scale($normalSize);
+                transform: scale3d($normalSize, $normalSize, $normalSize);
         }
 }
 </style>
