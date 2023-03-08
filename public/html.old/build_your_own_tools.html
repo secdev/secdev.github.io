@@ -1,0 +1,136 @@
+<html>
+
+<head>
+<title>Use Scapy to build your own tools</title>
+<link rel="stylesheet" href="scapy.css" type="text/css">
+</head>
+
+</body>
+<h1>Use Scapy to build your own tools</h1>
+
+
+You can use <a href="index.html">Scapy</a> to make your own automated tools. You can also extend Scapy without 
+having to edit its source file.
+<p>
+If you have built some interesting tools, please contribute back to the mailing-list!
+
+
+<h2>Extending Scapy</h2>
+
+If you need to add some new protocols, new functions, anything, you can write it directly
+into Scapy source file. But this is not very conveniant. Even if those modifications are to be 
+integrated into Scapy, it can be more conveniant to write them in a separate file. 
+<p>
+
+Once you've done that, you can launch Scapy and import your file, but this is still not 
+very conveniant. Another way to do that is to make your file executable and have it call
+the Scapy function named <tt>interact()</tt>.
+<p>
+
+<pre>
+<span class="slc">#! /usr/bin/env python
+</span>
+<span class="slc"># Set log level to benefit from Scapy warnings
+</span><span class="kwc">import</span> logging
+logging<span class="sym">.</span>getLogger<span class="sym">(</span><span class="str">&quot;scapy&quot;</span><span class="sym">).</span>setLevel<span class="sym">(</span><span class="num">1</span><span class="sym">)
+
+</span><span class="kwc">from</span> scapy.all <span class="kwc">import</span> <span class="sym">*
+
+</span><span class="kwa">class</span> Test<span class="sym">(</span>Packet<span class="sym">):
+</span>    name <span class="sym">=</span> <span class="str">&quot;Test packet&quot;</span>
+    fields_desc <span class="sym">= [</span> ShortField<span class="sym">(</span><span class="str">&quot;test1&quot;</span><span class="sym">,</span> <span class="num">1</span><span class="sym">),
+</span>                    ShortField<span class="sym">(</span><span class="str">&quot;test2&quot;</span><span class="sym">,</span> <span class="num">2</span><span class="sym">) ]
+
+</span><span class="kwb">def</span> make_test<span class="sym">(</span>x<span class="sym">,</span>y<span class="sym">):
+</span>    <span class="kwb">return</span> Ether<span class="sym">()/</span>IP<span class="sym">()/</span>Test<span class="sym">(</span>test1<span class="sym">=</span>x<span class="sym">,</span>test2<span class="sym">=</span>y<span class="sym">)
+
+</span><span class="kwb">if</span> __name__ <span class="sym">==</span> <span class="str">&quot;__main__&quot;</span><span class="sym">:
+</span>    interact<span class="sym">(</span>mydict<span class="sym">=</span><span class="kwa">globals</span><span class="sym">(),</span> mybanner<span class="sym">=</span><span class="str">&quot;Test add-on v3.14&quot;</span><span class="sym">)</span>
+</pre>
+
+<p>
+
+If you put the above listing in the <tt>test_interact.py</tt> file and make it executable,
+you'll get :
+<p>
+
+<pre>
+# ./test_interact.py 
+Welcome to Scapy (0.9.17.109beta)
+Test add-on v3.14
+<span class=prompt>&gt;&gt;&gt;</span> make_test(42,666)
+<span>&lt;</span><span class=layer_name>Ether</span><span> </span><span class=field_name>type</span><span>=</span><span class=field_value>0x800</span><span> |</span><span>&lt;</span><span class=layer_name>IP</span><span> |</span><span>&lt;</span><span class=layer_name>Test</span><span> </span><span class=field_name>test1</span><span>=</span><span class=field_value>42</span><span> </span><span class=field_name>test2</span><span>=</span><span class=field_value>666</span><span> |</span><span>&gt;</span><span>&gt;</span>&gt;
+</pre>
+
+
+<h2>Using Scapy in your tools</h2>
+
+You can easily use Scapy in your own tools. Just import what you need
+and do it.
+<p>
+
+This first example take an IP or a name as first parameter, send an ICMP echo request
+packet and display the completely dissected return packet.
+<p>
+
+<pre>
+<span class="slc">#! /usr/bin/env python
+</span>
+<span class="kwc">import</span> sys
+<span class="kwc">from</span> scapy.all <span class="kwc">import</span> sr1<span class="sym">,</span>IP<span class="sym">,</span>ICMP
+
+p<span class="sym">=</span>sr1<span class="sym">(</span>IP<span class="sym">(</span>dst<span class="sym">=</span>sys<span class="sym">.</span>argv<span class="sym">[</span><span class="num">1</span><span class="sym">])/</span>ICMP<span class="sym">())
+</span><span class="kwb">if</span> p<span class="sym">:
+</span>    p<span class="sym">.</span>show<span class="sym">()</span>
+</pre>
+
+<p>
+This is a more complex example which does an ARP ping and
+reports what it found with LaTeX formating.
+
+<pre>
+<span class="slc">#! /usr/bin/env python
+</span><span class="slc"># arping2tex : arpings a network and outputs a LaTeX table as a result
+</span>
+<span class="kwc">import</span> sys
+<span class="kwb">if</span> <span class="kwa">len</span><span class="sym">(</span>sys<span class="sym">.</span>argv<span class="sym">) !=</span> <span class="num">2</span><span class="sym">:
+</span>    <span class="kwa">print</span> <span class="str">&quot;Usage: arping2tex &lt;net&gt;</span><span class="esc">\n </span> <span class="str">eg: arping2tex 192.168.1.0/24&quot;</span>
+    sys<span class="sym">.</span>exit<span class="sym">(</span><span class="num">1</span><span class="sym">)
+
+</span><span class="kwc">from</span> scapy.all <span class="kwc">import</span> srp<span class="sym">,</span>Ether<span class="sym">,</span>ARP<span class="sym">,</span>conf
+conf<span class="sym">.</span>verb<span class="sym">=</span><span class="num">0
+</span>ans<span class="sym">,</span>unans<span class="sym">=</span>srp<span class="sym">(</span>Ether<span class="sym">(</span>dst<span class="sym">=</span><span class="str">&quot;ff:ff:ff:ff:ff:ff&quot;</span><span class="sym">)/</span>ARP<span class="sym">(</span>pdst<span class="sym">=</span>sys<span class="sym">.</span>argv<span class="sym">[</span><span class="num">1</span><span class="sym">]),
+</span>              timeout<span class="sym">=</span><span class="num">2</span><span class="sym">)
+
+</span><span class="kwa">print</span> r<span class="str">&quot;\begin{tabular}{|l|l|}&quot;</span>
+<span class="kwa">print</span> r<span class="str">&quot;\hline&quot;</span>
+<span class="kwa">print</span> r<span class="str">&quot;MAC &amp; IP\\&quot;</span>
+<span class="kwa">print</span> r<span class="str">&quot;\hline&quot;</span>
+<span class="kwb">for</span> snd<span class="sym">,</span>rcv <span class="kwb">in</span> ans<span class="sym">:
+</span>    <span class="kwa">print</span> rcv<span class="sym">.</span>sprintf<span class="sym">(</span>r<span class="str">&quot;%Ether.src% &amp; %ARP.psrc%\\&quot;</span><span class="sym">)
+</span><span class="kwa">print</span> r<span class="str">&quot;\hline&quot;</span>
+<span class="kwa">print</span> r<span class="str">&quot;\end{tabular}&quot;</span>
+</pre>
+
+<p>
+Here is another tool that will constantly monitor all interfaces on a machine and print all ARP request it sees, even on 802.11 frames from a Wi-Fi card in monitor mode.
+Note the <tt>store=0</tt> parameter to <tt>sniff()</tt> to avoid storing all packets in memory for nothing.
+
+<pre>
+<span class="slc">#! /usr/bin/env python</span>
+<span class="kwa">from</span> scapy.all <span class="kwa">import</span> <span class="sym">*</span>
+
+<span class="kwa">def</span> <span class="kwd">arp_monitor_callback</span><span class="sym">(</span>pkt<span class="sym">):</span>
+    <span class="kwa">if</span> ARP <span class="kwa">in</span> pkt <span class="kwa">and</span> pkt<span class="sym">[</span>ARP<span class="sym">].</span>op <span class="kwa">in</span> <span class="sym">(</span><span class="num">1</span><span class="sym">,</span><span class="num">2</span><span class="sym">):</span> <span class="slc">#who-has or is-at</span>
+        <span class="kwa">return</span> pkt<span class="sym">.</span><span class="kwd">sprintf</span><span class="sym">(</span><span class="str">&quot;%ARP.hwsrc% %ARP.psrc%&quot;</span><span class="sym">)</span>
+
+<span class="kwd">sniff</span><span class="sym">(</span>prn<span class="sym">=</span>arp_monitor_callback<span class="sym">,</span> <span class="kwb">filter</span><span class="sym">=</span><span class="str">&quot;arp&quot;</span><span class="sym">,</span> store<span class="sym">=</span><span class="num">0</span><span class="sym">)</span>
+</pre>
+
+
+
+
+<p>
+For a real life example, you can check <a href=http://sid.rstack.org/index.php/Wifitap_EN>Wifitap</a>
+
+

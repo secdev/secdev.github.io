@@ -5,6 +5,11 @@
  */
 
 // https://next.vuetifyjs.com/features/sass-variables/`
-// @use 'vuetify' with (
+// @use 'vuetify/settings' with (
 //   $color-pack: false
 // );
+
+@use 'vuetify/settings' with (
+    // Increase tab-slider-size for accessibility (from 2px)
+    $tab-slider-size: 3px
+)

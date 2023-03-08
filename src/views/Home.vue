@@ -64,9 +64,11 @@
                     <span class="font-weight-bold">Cross-platform</span>
                   </p>
                   <p>
-                    Scapy runs natively on Linux, Windows, OSX and on most Unixes with libpcap.<br />
+                    Scapy runs natively on Linux, Windows, OSX and on most Unixes with libpcap.
+                    It is published under <a href="https://www.gnu.org/licenses/gpl-2.0"
+                      class="text-decoration-none text-primary">GPLv2</a>.<br />
                     Starting from version 2.5.0+, it has has support for <span class="text-primary">Python
-                      3.7+</span> (and PyPy).
+                      3.7+</span> (and PyPy).<br />
                   </p>
                 </v-col>
               </v-row>
@@ -113,7 +115,7 @@
                 <li>ThePacketGeek's <a class="text-secondary"
                     href="https://thepacketgeek.com/scapy/building-network-tools/">"Building Network Tools with Scapy
                     tutorial"</a></li>
-                <li><a class="text-secondary" href="http://www.oreilly.com/catalog/9780596009632/">Security Power
+                <li><a class="text-secondary" href="https://www.oreilly.com/catalog/9780596009632/">Security Power
                     Tools</a> where Philippe Biondi wrote a complete chapter about Scapy.</li>
                 <li>A bunch (<a class="text-secondary"
                     href="https://boutique.ed-diamond.com/home/863-misc-hs-11.html">MISC HS 11</a>, <a
@@ -123,28 +125,34 @@
                   of articles in French Security Magazines</li>
               </ul>
               </p>
-              <p class="mt-2">
+              <p class="mt-3">
                 This website also hosts several conferences related to Scapy, some of which can provide details regarding
                 certain parts of Scapy:
               <ul class="ml-5">
-                <li><a class="text-secondary" :href="BASE_URL + 'talk/troopers2022/main.slides.html'">Automotive Network
+                <li><a class="text-secondary" :href="BASE_URL + 'talks/troopers2022/main.slides.html'">Automotive Network
                     Scans with Scapy - Troopers 2022
                     slides</a></li>
-                <li><a class="text-secondary" :href="BASE_URL + 'talk/troopers2019/index.html'">Automotive Penetration
+                <li><a class="text-secondary" :href="BASE_URL + 'talks/troopers2019/index.html'">Automotive Penetration
                     Testing with Scapy - Troopers 2019
                     slides</a></li>
-                <li><a class="text-secondary" :href="BASE_URL + 'talk/scapy_pacsec05.pdf'">Scapy’s PacSec/core05
-                    slides</a> (<a class="text-secondary" :href="BASE_URL + 'talk/scapy_pacsec05.handout.pdf'">printable
+                <li><a class="text-secondary" :href="BASE_URL + 'talks/scapy_pacsec05.pdf'">Scapy’s PacSec/core05
+                    slides</a> (<a class="text-secondary" :href="BASE_URL + 'talks/scapy_pacsec05.handout.pdf'">printable
                     version</a>)</li>
-                <li><a class="text-secondary" :href="BASE_URL + 'talk/scapy_hack.lu.pdf'">Scapy’s Hack.lu 2005 slides</a>
+                <li><a class="text-secondary" :href="BASE_URL + 'talks/scapy_hack.lu.pdf'">Scapy’s Hack.lu 2005 slides</a>
                 </li>
-                <li><a class="text-secondary" :href="BASE_URL + 'talk/scapy_Aachen.pdf'">Scapy’s Summerschool Applied IT
+                <li><a class="text-secondary" :href="BASE_URL + 'talks/scapy_Aachen.pdf'">Scapy’s Summerschool Applied IT
                     Security 2005 slides</a></li>
-                <li><a class="text-secondary" :href="BASE_URL + 'talk/scapy_T2.pdf'">Scapy’s T2’2005 slides</a></li>
-                <li><a class="text-secondary" :href="BASE_URL + 'talk/scapy_csw05.pdf'">Scapy’s CanSecWest/core05
+                <li><a class="text-secondary" :href="BASE_URL + 'talks/scapy_T2.pdf'">Scapy’s T2’2005 slides</a></li>
+                <li><a class="text-secondary" :href="BASE_URL + 'talks/scapy_csw05.pdf'">Scapy’s CanSecWest/core05
                     slides</a></li>
-                <li><a class="text-secondary" :href="BASE_URL + 'talk/scapy_lsm2003.pdf'">Scapy’s LSM 2003 slides</a></li>
+                <li><a class="text-secondary" :href="BASE_URL + 'talks/scapy_lsm2003.pdf'">Scapy’s LSM 2003 slides</a>
+                </li>
               </ul>
+              </p>
+              <p class="mt-3">
+                Finally, note that we have an <a class="text-secondary"
+                  href="https://github.com/secdev/awesome-scapy">awesome-scapy</a> page, where we try to reference cool
+                projects that make use of Scapy.
               </p>
             </v-card-text>
           </v-card>
@@ -184,11 +192,11 @@
                   </a>
                 </p>
                 <v-card color="transparent">
-                  <v-tabs v-model="dllTab" bg-color="primary" density="compact">
+                  <v-tabs v-model="dllTab" bg-color="primary" density="compact" slider-color="#314C46">
                     <v-tab value="pypi">PyPI</v-tab>
                     <v-tab value="github">Github</v-tab>
-                    <v-tab value="conda">Conda (forge)</v-tab>
-                    <v-tab value="debian">Debian / Ubuntu</v-tab>
+                    <v-tab value="conda">Conda</v-tab>
+                    <v-tab value="debian">Debian/Ubuntu</v-tab>
                     <v-tab value="windows">Windows</v-tab>
                     <v-tab value="other">More</v-tab>
                   </v-tabs>

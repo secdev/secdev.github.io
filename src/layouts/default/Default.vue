@@ -6,7 +6,7 @@
 
     <v-footer class="text-center d-flex flex-column">
       <v-breadcrumbs divider="●">
-        <v-breadcrumbs-item>© The Scapy community</v-breadcrumbs-item>
+        <v-breadcrumbs-item>Scapy community</v-breadcrumbs-item>
         <v-breadcrumbs-divider />
         <v-breadcrumbs-item>2023</v-breadcrumbs-item>
         <v-breadcrumbs-divider />

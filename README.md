@@ -1,57 +1,18 @@
-# base
+# Scapy.net
 
-## Project setup
+This repo hosts the source code behind the `scapy.net` website.
 
-```
-# yarn
-yarn
+## Website
 
-# npm
-npm install
+The website is written in [Vue.js 3](https://vuejs.org/), using the [Vuetify](https://vuetifyjs.com/) framework, and built & published using Github Actions.
 
-# pnpm
-pnpm install
-```
+### Develop
 
-### Compiles and hot-reloads for development
-
-```
-# yarn
-yarn dev
-
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
+```bash
+$ npm install
+$ npm run dev
 ```
 
-### Compiles and minifies for production
+## public
 
-```
-# yarn
-yarn build
-
-# npm
-npm run build
-
-# pnpm
-pnpm build
-```
-
-### Lints and fixes files
-
-```
-# yarn
-yarn lint
-
-# npm
-npm run lint
-
-# pnpm
-pnpm lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://vitejs.dev/config/).
+The website also serves as a hosting platform for some external files, such as talks or conferences related to Scapy.
