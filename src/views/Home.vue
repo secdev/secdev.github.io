@@ -295,7 +295,7 @@ const quote = computed(() => {
 /* Demo code */
 const DEMO_CODE = `\
 $ sudo scapy -H
-Welcome to Scapy (2.5.0)
+Welcome to Scapy (` + version + `)
 <span class="text-blue">&gt;&gt;&gt;</span> pkt = Ether()/IP(dst=<span class="text-orange">"github.com"</span>)/ICMP()
 <span class="text-blue">&gt;&gt;&gt;</span> resp = srp1(pkt, iface=<span class="text-orange">"eth0"</span>, timeout=1)
 Begin emission:
