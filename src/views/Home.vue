@@ -64,10 +64,10 @@
                     <span class="font-weight-bold">Cross-platform</span>
                   </p>
                   <p>
-                    Scapy runs natively on Linux, Windows, OSX and on most Unixes with libpcap.
+                    Scapy runs natively on Linux, macOS, most Unixes, and on Windows with Npcap.
                     It is published under <a href="https://www.gnu.org/licenses/gpl-2.0"
                       class="text-decoration-none text-primary">GPLv2</a>.<br />
-                    Starting from version 2.5.0+, it has has support for <span class="text-primary">Python
+                    Starting from version 2.5.0+, it supports <span class="text-primary">Python
                       3.7+</span> (and PyPy).<br />
                   </p>
                 </v-col>
@@ -116,7 +116,7 @@
                     href="https://thepacketgeek.com/scapy/building-network-tools/">"Building Network Tools with Scapy
                     tutorial"</a></li>
                 <li><a class="text-secondary" href="https://www.oreilly.com/catalog/9780596009632/">Security Power
-                    Tools</a> where Philippe Biondi wrote a complete chapter about Scapy.</li>
+                    Tools</a> where Philippe Biondi wrote a complete chapter about Scapy</li>
                 <li>A bunch (<a class="text-secondary"
                     href="https://boutique.ed-diamond.com/home/863-misc-hs-11.html">MISC HS 11</a>, <a
                     class="text-secondary" href="https://boutique.ed-diamond.com/numeros-deja-parus/354-misc52.html">MISC
