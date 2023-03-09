@@ -1,6 +1,6 @@
-# Scapy.net
+# Scapy.net - OLD
 
-This page is the source code linked with the website `secdev.github.io`, but also `scapy.net`.
+***Old scapy.net website. Don't look it's ugly***
 
 The website is using github pages with the "Beatiful Jekyll" theme.
 
