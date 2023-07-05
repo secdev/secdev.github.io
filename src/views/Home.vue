@@ -171,6 +171,9 @@
                 <v-col cols="6" sm="4" lg="6">
                   <SponsorCard user="guedou" userid="11683796" />
                 </v-col>
+                <v-col cols="6" sm="4" lg="6">
+                  <SponsorCard user="polybassa" userid="1676055" />
+                </v-col>
               </v-row>
             </v-card-text>
           </v-card>
