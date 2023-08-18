@@ -44,7 +44,7 @@
                     <span class="font-weight-bold">Manipulate packets</span>
                   </p>
                   <p>
-                    Scapy is a powerful <span class="text-primary">interactive packet manipulation libary</span>
+                    Scapy is a powerful <span class="text-primary">interactive packet manipulation library</span>
                     written in <span>Python</span>.
                     Scapy is able to forge or decode packets of a wide number of protocols, send them on the wire, capture
                     them, match requests and replies, and much more.
