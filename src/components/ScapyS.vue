@@ -74,13 +74,13 @@ function calcLogo() {
         }).join('');
 }
 
-/* Load logo, then refresh again every 100ms */
+/* Load logo, then refresh again every 120ms */
 let interval: ReturnType<typeof setInterval>;
 onMounted(() => {
         logo.value = calcLogo();
         interval = setInterval(() => {
                 logo.value = calcLogo();
-        }, 100);
+        }, 120);
 });
 onBeforeUnmount(() => {
         clearInterval(interval);
