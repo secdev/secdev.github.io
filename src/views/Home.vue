@@ -34,7 +34,10 @@
       <v-row>
         <!-- What is Scapy -->
         <v-col cols="12" lg="7" class="d-flex">
-          <v-card variant="tonal" title="What is Scapy?">
+          <v-card variant="tonal">
+            <v-card-title>
+              <h4>What is Scapy?</h4>
+            </v-card-title>
             <v-card-text>
               <v-row>
                 <v-col cols="12" sm="4">
@@ -79,7 +82,10 @@
         </v-col>
         <!-- Documentation -->
         <v-col cols="12" lg="8">
-          <v-card variant="tonal" title="Documentation">
+          <v-card variant="tonal">
+            <v-card-title>
+              <h4>Documentation</h4>
+            </v-card-title>
             <v-card-text class="text-body-2 align-content-center">
               <p>
                 The official Scapy documentation can be found online on readthedocs:
@@ -153,7 +159,10 @@
         </v-col>
         <!-- Maintainers -->
         <v-col cols="12" lg="4" class="d-flex flex-column">
-          <v-card variant="tonal" title="Maintainers" class="flex-grow-1 flex-shrink-1">
+          <v-card variant="tonal" class="flex-grow-1 flex-shrink-1">
+            <v-card-title>
+              <h4>Maintainers</h4>
+            </v-card-title>
             <v-card-text class="text-body-2">
               <v-row>
                 <v-col cols="6" sm="4" lg="6">
@@ -175,7 +184,10 @@
         <!-- Downloads -->
         <v-col cols="12">
           <div ref="downloads_section">
-            <v-card variant="tonal" title="Downloads & Installation">
+            <v-card variant="tonal">
+              <v-card-title>
+                <h4>Downloads & Installation</h4>
+              </v-card-title>
               <v-card-text class="text-body-2">
                 <p>
                   There are several ways of installing Scapy, depending on your plateform.
@@ -339,5 +351,11 @@ a:visited {
 /* Bash line */
 code.bash:before {
   content: '$ ';
+}
+
+/* Thinner h4 titles */
+h4 {
+  font-weight: 500;
+  padding: 2px 0px 2px 0px;
 }
 </style>
