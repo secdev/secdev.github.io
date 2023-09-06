@@ -2,41 +2,42 @@
   <div>
     <!-- The animated Scapy logo box -->
     <v-container>
-      <v-row align="center" justify="center">
-        <v-col cols="auto" class="pl-0">
+      <v-row align="center" justify="center" aria-hidden="true">
+        <v-col cols="auto" class="pa-0 pr-2">
           <ScapyS />
         </v-col>
-        <v-col cols="6" class="px-0">
+        <v-col cols="6" lg="4" class="px-0">
           <v-fade-transition>
-            <v-card v-show="animationOk">
-              <v-card-text class="scapy-main-box fill-height px-0 text-blue-lighten-2">
-                <template v-if="!smAndDown">
-                  | <br />
-                </template>
-                | Welcome to Scapy<br />
-                | Version {{ version }}<br />
+            <div v-show="animationOk" color="transparent" class="scapy-main-box fill-height px-0 text-blue-lighten-2">
+              <template v-if="!smAndDown">
                 | <br />
-                | <span class='text-secondary'><a href="https://github.com/secdev/scapy"><span
-                      class="hidden-xs">https://github.com/</span>secdev/scapy</a>
-                </span><br />
+              </template>
+              | Welcome to Scapy<br />
+              | Version {{ version }}<br />
+              | <br />
+              | <span class='text-secondary'><a href="https://github.com/secdev/scapy"><span
+                    class="hidden-xs">https://github.com/</span>secdev/scapy</a>
+              </span><br />
+              | <br />
+              | Have fun!<br />
+              <template v-if="!smAndDown">
                 | <br />
-                | Have fun!<br />
-                <template v-if="!smAndDown">
-                  | <br />
-                  | {{ quote[0] }}<br />
-                  | {{ quote[1] }}<br />
-                  | {{ quote[2] }}<br />
-                  | <br />
-                </template>
-              </v-card-text>
-            </v-card>
+                | {{ quote[0] }}<br />
+                | {{ quote[1] }}<br />
+                | {{ quote[2] }}<br />
+                | <br />
+              </template>
+            </div>
           </v-fade-transition>
         </v-col>
       </v-row>
       <v-row>
         <!-- What is Scapy -->
         <v-col cols="12" lg="7" class="d-flex">
-          <v-card variant="tonal" title="What is Scapy?">
+          <v-card variant="tonal">
+            <v-card-title>
+              <h4>What is Scapy?</h4>
+            </v-card-title>
             <v-card-text>
               <v-row>
                 <v-col cols="12" sm="4">
@@ -77,15 +78,14 @@
         </v-col>
         <!-- Shell demo -->
         <v-col cols="12" lg="5" class="d-flex flex-column">
-          <v-card variant="tonal" title="Shell demo" class="flex-grow-1 flex-shrink-1">
-            <v-card-text class="text-body-2">
-              <pre style="white-space: pre-wrap;" v-html="DEMO_CODE"></pre>
-            </v-card-text>
-          </v-card>
+          <ScapyTerminal :content="DEMO_CODE"></ScapyTerminal>
         </v-col>
         <!-- Documentation -->
         <v-col cols="12" lg="8">
-          <v-card variant="tonal" title="Documentation">
+          <v-card variant="tonal">
+            <v-card-title>
+              <h4>Documentation</h4>
+            </v-card-title>
             <v-card-text class="text-body-2 align-content-center">
               <p>
                 The official Scapy documentation can be found online on readthedocs:
@@ -159,7 +159,10 @@
         </v-col>
         <!-- Maintainers -->
         <v-col cols="12" lg="4" class="d-flex flex-column">
-          <v-card variant="tonal" title="Maintainers" class="flex-grow-1 flex-shrink-1">
+          <v-card variant="tonal" class="flex-grow-1 flex-shrink-1">
+            <v-card-title>
+              <h4>Maintainers</h4>
+            </v-card-title>
             <v-card-text class="text-body-2">
               <v-row>
                 <v-col cols="6" sm="4" lg="6">
@@ -181,7 +184,10 @@
         <!-- Downloads -->
         <v-col cols="12">
           <div ref="downloads_section">
-            <v-card variant="tonal" title="Downloads & Installation">
+            <v-card variant="tonal">
+              <v-card-title>
+                <h4>Downloads & Installation</h4>
+              </v-card-title>
               <v-card-text class="text-body-2">
                 <p>
                   There are several ways of installing Scapy, depending on your plateform.
@@ -195,12 +201,12 @@
                   </a>
                 </p>
                 <v-card color="transparent">
-                  <v-tabs v-model="dllTab" bg-color="primary" density="compact" slider-color="#314C46">
+                  <v-tabs show-arrows v-model="dllTab" bg-color="primary" density="compact" slider-color="#314C46">
                     <v-tab value="pypi">PyPI</v-tab>
+                    <v-tab value="windows">Windows</v-tab>
                     <v-tab value="github">Github</v-tab>
                     <v-tab value="conda">Conda</v-tab>
                     <v-tab value="debian">Debian/Ubuntu</v-tab>
-                    <v-tab value="windows">Windows</v-tab>
                     <v-tab value="other">More</v-tab>
                   </v-tabs>
                   <v-card-text>
@@ -254,9 +260,10 @@
 <script lang="ts" setup>
 import ScapyS from '@/components/ScapyS.vue'
 import SponsorCard from '@/components/SponsorCard.vue'
+import ScapyTerminal from '@/components/ScapyTerminal.vue'
 
 import { useDisplay } from 'vuetify';
-import { inject, computed, onMounted, ref } from 'vue';
+import { inject, computed, onMounted, ref, watchEffect } from 'vue';
 import type { Ref } from 'vue'
 
 const version = '2.5.0';
@@ -273,6 +280,17 @@ onMounted(() => {
     setTimeout(() => {
       animationOk.value = true;
     }, 1000);
+  }
+});
+
+/* Size of quote text */
+const fontSize = ref('1em');
+watchEffect(() => {
+  /* Select font size based on display size */
+  if (smAndDown.value) {
+    fontSize.value = '0.8em';
+  } else {
+    fontSize.value = '1em';
   }
 });
 
@@ -320,6 +338,7 @@ const BASE_URL = import.meta.env.BASE_URL;
 .scapy-main-box {
   /* Monospace font */
   font-family: Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace;
+  font-size: v-bind(fontSize);
   white-space: pre;
 }
 
@@ -332,5 +351,11 @@ a:visited {
 /* Bash line */
 code.bash:before {
   content: '$ ';
+}
+
+/* Thinner h4 titles */
+h4 {
+  font-weight: 500;
+  padding: 2px 0px 2px 0px;
 }
 </style>
