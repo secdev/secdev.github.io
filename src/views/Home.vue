@@ -99,7 +99,7 @@
                   <v-col cols="auto">
                     <v-btn href="https://scapy.readthedocs.io/" color="secondary">
                       Documentation
-                      <v-icon class="ml-1">mdi-open-in-new</v-icon>
+                      <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
                     </v-btn>
                   </v-col>
                 </v-row>
@@ -244,7 +244,7 @@
                           </p>
                           <v-btn href="https://npcap.com/#download" color="secondary">
                             Download Npcap
-                            <v-icon class="ml-1">mdi-open-in-new</v-icon>
+                            <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
                           </v-btn>
                         </v-window-item>
                         <v-window-item value="other">
@@ -255,7 +255,7 @@
                             href="https://scapy.readthedocs.io/en/latest/installation.html#platform-specific-instructions"
                             color="secondary">
                             Other instructions
-                            <v-icon class="ml-1">mdi-open-in-new</v-icon>
+                            <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
                           </v-btn>
                         </v-window-item>
                       </v-window>
@@ -280,6 +280,8 @@ import XTerm from '@/components/XTerm.vue'
 import { useDisplay } from 'vuetify';
 import { inject, computed, onMounted, ref, watchEffect } from 'vue';
 import type { Ref } from 'vue'
+
+import { mdiOpenInNew } from '@mdi/js';
 
 const version = '2.5.0';
 

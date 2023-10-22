@@ -9,7 +9,7 @@
     "lint": "eslint . --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@mdi/font": "7.3.67",
+    "@mdi/js": "^7.3.67",
     "core-js": "^3.33.1",
     "pyodide": "^0.23.4",
     "roboto-fontface": "*",
