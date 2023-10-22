@@ -8,7 +8,7 @@
       <v-breadcrumbs divider="●">
         <v-breadcrumbs-item>Scapy community</v-breadcrumbs-item>
         <v-breadcrumbs-divider />
-        <v-breadcrumbs-item>2023</v-breadcrumbs-item>
+        <v-breadcrumbs-item>2008-{{ currentYear }}</v-breadcrumbs-item>
         <v-breadcrumbs-divider />
         <v-breadcrumbs-item><a href="https://scapy.net">scapy.net</a></v-breadcrumbs-item>
       </v-breadcrumbs>
@@ -27,6 +27,9 @@ import { provide, ref } from 'vue'
 /* Declare scrolling pointers */
 const downloads_section = ref<HTMLDivElement | null>(null);
 provide('downloads_section', downloads_section);
+
+/* Current year */
+const currentYear = new Date().getFullYear();
 </script>
 
 <style scoped>

@@ -23,7 +23,8 @@ export default defineConfig({
   define: { 'process.env': {} },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '~': fileURLToPath(new URL('./node_modules', import.meta.url))
     },
     extensions: [
       '.js',
@@ -35,6 +36,10 @@ export default defineConfig({
       '.vue',
     ],
   },
+  // for scapy pyodide assets
+  assetsInclude: [
+    'src/assets/*.whl'
+  ],
   server: {
     port: 3000,
     watch: {

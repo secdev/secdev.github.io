@@ -1,19 +1,15 @@
 <template>
-    <v-container class="pa-0 flex-grow-1 flex-shrink-1">
+    <v-container fluid class="pa-0">
         <div class="btnbar">
             <div class="d-inline-block btn close"></div>
             <div class="d-inline-block btn minimize"></div>
             <div class="d-inline-block btn zoom"></div>
         </div>
         <div class="content">
-            <pre style="white-space: pre-wrap;" v-html="props.content"></pre>
+            <slot></slot>
         </div>
     </v-container>
 </template>
-
-<script lang="ts" setup>
-const props = defineProps(['content'])
-</script>
 
 <style scoped lang="scss">
 .btn {
@@ -52,7 +48,6 @@ const props = defineProps(['content'])
 .content {
     background-color: #151515;
     margin: 0 auto;
-    padding: 10px 0px 10px 20px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
