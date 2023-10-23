@@ -40,9 +40,9 @@ export async function startXterm(term: Terminal, terminal: Ref<HTMLElement | nul
     if (xs.value) {
         term.options.fontSize = 10;
     } else if (sm.value) {
-        term.options.fontSize = 12;
+        term.options.fontSize = 13;
     } else {
-        term.options.fontSize = 14;
+        term.options.fontSize = 15;
     }
     // Display
     if (!terminal.value) {

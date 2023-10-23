@@ -2,9 +2,9 @@
   <div>
     <!-- The animated Scapy logo box -->
     <v-row justify="center">
-      <v-col cols="11" class="mb-3">
+      <v-col cols="11" class="mb-4">
         <v-row align="center" justify="center" aria-hidden="true">
-          <v-col cols="auto" class="pa-0 pr-2">
+          <v-col cols="auto" class="pt-3 pb-0 pl-0 pr-2">
             <ScapyS />
           </v-col>
           <v-col cols="6" lg="4" class="px-0">
@@ -81,8 +81,18 @@
           </v-col>
           <!-- Shell demo -->
           <v-col cols="12" lg="5">
-            <TerminalFrame>
+            <TerminalFrame style="position: relative;">
               <XTerm :static="DEMO_CODE" class="scapy-term" />
+              <div style="position: absolute; right: 5px; bottom: 5px;">
+
+                <v-tooltip text="Try Scapy" location="start">
+                  <template v-slot:activator="{ props }">
+                    <v-btn v-bind="props" class="px-0" min-width="36px" color="yellow" @click="setTryScapy(true)">
+                      >_
+                    </v-btn>
+                  </template>
+                </v-tooltip>
+              </div>
             </TerminalFrame>
           </v-col>
           <!-- Documentation -->
@@ -92,6 +102,7 @@
                 <h4>Documentation</h4>
               </v-card-title>
               <v-card-text class="text-body-2 align-content-center">
+                <!-- Emphasis on the official doc -->
                 <p>
                   The official Scapy documentation can be found online on readthedocs:
                 </p>
@@ -104,170 +115,187 @@
                   </v-col>
                 </v-row>
                 <p>
-                  But there are other good introductions out there, most notably:
-                <ul class="ml-5">
-                  <li><a class="text-secondary"
-                      href="https://guedou.github.io/talks/2022_GreHack/Scapy in 0x30 minutes.slides.html">Scapy
-                      in 0x30 minutes</a> (<a class="text-secondary"
-                      href="https://github.com/guedou/guedou.github.io/blob/master/talks/2022_GreHack/Scapy%20in%200x30%20minutes.ipynb">notebook</a>)
-                    by guedou</li>
-                  <li><a class="text-secondary"
-                      href="https://github.com/secdev/scapy/blob/master/doc/notebooks/Scapy%20in%2015%20minutes.ipynb">Scapy
-                      in 15 minutes (or longer)</a>, made guedou and p-l-</li>
-                  <li><a class="text-secondary" href="https://guedou.github.io/talks/2021_sharkfest/slides.pdf">Scapy
-                      Turned 18. Boy They Grow Up Fast, Don’t They - SharkFest’21 Keynote</a> (<a class="text-secondary"
-                      href="https://www.youtube.com/watch?v=krZ3fOCTlfs">video</a>), by guedou</li>
-                  <li>ThePacketGeek's <a class="text-secondary"
-                      href="https://thepacketgeek.com/scapy/building-network-tools/">"Building Network Tools with Scapy
-                      tutorial"</a></li>
-                  <li><a class="text-secondary" href="https://www.oreilly.com/catalog/9780596009632/">Security Power
-                      Tools</a> where Philippe Biondi wrote a complete chapter about Scapy</li>
-                  <li>A bunch (<a class="text-secondary"
-                      href="https://boutique.ed-diamond.com/home/863-misc-hs-11.html">MISC HS 11</a>, <a
-                      class="text-secondary"
-                      href="https://boutique.ed-diamond.com/numeros-deja-parus/354-misc52.html">MISC
-                      52</a>, <a class="text-secondary"
-                      href="https://boutique.ed-diamond.com/les-hors-series/1245-gnulinux-magazine-hs-90.html">GNU
-                      HS90</a>)
-                    of articles in French Security Magazines</li>
-                </ul>
+                  The official documentation is <span class="text-primary font-weight-bold">probably the best way of
+                    learning Scapy</span>, as it's the only up-to-date official resource.
+                  That being said, there are many other good resources, some of which are listed below.
                 </p>
+                <br />
+                <!-- Resources -->
+                <span class="text-h6">Good introductions to Scapy</span>
+                <v-table class="mb-2" density="compact">
+                  <thead>
+                    <tr>
+                      <th class="text-left">Title</th>
+                      <th class="text-left">Links</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, i) in RESOURCES" :key="i">
+                      <td><span class="text-primary">{{ item.title }}</span> by {{ item.author }}</td>
+                      <td>
+                        <div class="overflow-hidden text-no-wrap">
+                          <v-tooltip :text="link.tooltip" v-for="(link, j) in item.links" :key="j">
+                            <template v-slot:activator="{ props }">
+                              <v-btn v-bind="props" :icon="link.icon" variant="plain" :href="link.link" color="secondary"
+                                :size="smAndDown ? 'x-small' : 'small'"></v-btn>
+                            </template>
+                          </v-tooltip>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </v-table>
+                <!-- Conferences -->
+                <span class="text-h6">Conferences</span>
+                <v-table density="compact">
+                  <thead>
+                    <tr>
+                      <th class="text-left" v-show="smAndUp">Title</th> <!-- Not shown on mobile -->
+                      <th class="text-left">Venue</th>
+                      <th class="text-left">Links</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, i) in CONFERENCES" :key="i">
+                      <td v-show="smAndUp"><span class="text-primary">{{ item.title }}</span></td>
+                      <td>
+                        {{ item.venue }}
+                      </td>
+                      <td>
+                        <div class="overflow-hidden text-no-wrap">
+                          <v-tooltip :text="link.tooltip" v-for="(link, j) in item.links" :key="j">
+                            <template v-slot:activator="{ props }">
+                              <v-btn v-bind="props" :icon="link.icon" variant="plain" :href="link.link" color="secondary"
+                                size="small"></v-btn>
+                            </template>
+                          </v-tooltip>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </v-table>
                 <p class="mt-3">
-                  This website also hosts several conferences related to Scapy, some of which can provide details
-                  regarding
-                  certain parts of Scapy:
-                <ul class="ml-5">
-                  <li><a class="text-secondary" :href="BASE_URL + 'talks/troopers2022/main.slides.html'">Automotive
-                      Network
-                      Scans with Scapy - Troopers 2022
-                      slides</a></li>
-                  <li><a class="text-secondary" :href="BASE_URL + 'talks/troopers2019/index.html'">Automotive Penetration
-                      Testing with Scapy - Troopers 2019
-                      slides</a></li>
-                  <li><a class="text-secondary" :href="BASE_URL + 'talks/scapy_pacsec05.pdf'">Scapy’s PacSec/core05
-                      slides</a> (<a class="text-secondary"
-                      :href="BASE_URL + 'talks/scapy_pacsec05.handout.pdf'">printable
-                      version</a>)</li>
-                  <li><a class="text-secondary" :href="BASE_URL + 'talks/scapy_hack.lu.pdf'">Scapy’s Hack.lu 2005
-                      slides</a>
-                  </li>
-                  <li><a class="text-secondary" :href="BASE_URL + 'talks/scapy_Aachen.pdf'">Scapy’s Summerschool Applied
-                      IT
-                      Security 2005 slides</a></li>
-                  <li><a class="text-secondary" :href="BASE_URL + 'talks/scapy_T2.pdf'">Scapy’s T2’2005 slides</a></li>
-                  <li><a class="text-secondary" :href="BASE_URL + 'talks/scapy_csw05.pdf'">Scapy’s CanSecWest/core05
-                      slides</a></li>
-                  <li><a class="text-secondary" :href="BASE_URL + 'talks/scapy_lsm2003.pdf'">Scapy’s LSM 2003 slides</a>
-                  </li>
-                </ul>
-                </p>
-                <p class="mt-3">
-                  Finally, note that we have an <a class="text-secondary"
+                  Finally, note that we have an <a class="text-secondary font-weight-bold"
                     href="https://github.com/secdev/awesome-scapy">awesome-scapy</a> page, where we try to reference cool
                   projects that make use of Scapy.
                 </p>
               </v-card-text>
             </v-card>
           </v-col>
-          <!-- Maintainers -->
           <v-col cols="12" lg="4" class="d-flex flex-column">
-            <v-card variant="tonal" class="flex-grow-1 flex-shrink-1">
-              <v-card-title>
-                <h4>Maintainers</h4>
-              </v-card-title>
-              <v-card-text class="text-body-2">
-                <v-row>
-                  <v-col cols="6" sm="4" lg="6">
-                    <SponsorCard user="gpotter2" userid="10530980" />
-                  </v-col>
-                  <v-col cols="6" sm="4" lg="6">
-                    <SponsorCard user="p-l-" userid="5064814" />
-                  </v-col>
-                  <v-col cols="6" sm="4" lg="6">
-                    <SponsorCard user="guedou" userid="11683796" />
-                  </v-col>
-                  <v-col cols="6" sm="4" lg="6">
-                    <SponsorCard user="polybassa" userid="1676055" />
-                  </v-col>
-                </v-row>
-              </v-card-text>
-            </v-card>
-          </v-col>
-          <!-- Downloads -->
-          <v-col cols="12">
-            <div ref="downloads_section">
+            <!-- Maintainers -->
+            <v-container fluid class="pa-0">
               <v-card variant="tonal">
                 <v-card-title>
-                  <h4>Downloads & Installation</h4>
+                  <h4>Maintainers</h4>
                 </v-card-title>
                 <v-card-text class="text-body-2">
-                  <p>
-                    There are several ways of installing Scapy, depending on your plateform.
-                  </p>
-                  <p class="pb-3">
-                    Please also have a look at the
-                    full documentation, which contains
-                    <a href="https://scapy.readthedocs.io/en/latest/installation.html" class="text-primary">more
-                      installation
-                      instructions.
-                    </a>
-                  </p>
-                  <v-card color="transparent">
-                    <v-tabs show-arrows v-model="dllTab" bg-color="primary" density="compact" slider-color="#314C46">
-                      <v-tab value="pypi">PyPI</v-tab>
-                      <v-tab value="windows">Windows</v-tab>
-                      <v-tab value="github">Github</v-tab>
-                      <v-tab value="conda">Conda</v-tab>
-                      <v-tab value="debian">Debian/Ubuntu</v-tab>
-                      <v-tab value="other">More</v-tab>
-                    </v-tabs>
-                    <v-card-text>
-                      <v-window v-model="dllTab">
-                        <v-window-item value="pypi">
-                          <code class="bash"><span class="text-secondary">pip install scapy</span></code>
-                        </v-window-item>
-                        <v-window-item value="github">
-                          <code
-                            class="bash"><span class="text-secondary">pip install https://github.com/secdev/scapy/archive/refs/heads/master.zip</span></code>
-                        </v-window-item>
-                        <v-window-item value="conda">
-                          <code class="bash"><span class="text-secondary">conda install -c conda-forge scapy</span></code>
-                        </v-window-item>
-                        <v-window-item value="debian">
-                          <code class="bash"><span class="text-secondary">sudo apt install python3-scapy</span></code>
-                        </v-window-item>
-                        <v-window-item value="windows">
-                          <p class="pb-2">
-                            You will need to install <a class="text-secondary"
-                              href="https://npcap.com/#download">Npcap</a>
-                            (included if you have Wireshark), then use another installation method (PyPI, Github, etc.)
-                          </p>
-                          <v-btn href="https://npcap.com/#download" color="secondary">
-                            Download Npcap
-                            <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
-                          </v-btn>
-                        </v-window-item>
-                        <v-window-item value="other">
-                          <p class="pb-2">
-                            More platform-specific instructions (MacOS, BSD...) are available in the full documentation:
-                          </p>
-                          <v-btn
-                            href="https://scapy.readthedocs.io/en/latest/installation.html#platform-specific-instructions"
-                            color="secondary">
-                            Other instructions
-                            <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
-                          </v-btn>
-                        </v-window-item>
-                      </v-window>
-                    </v-card-text>
-                  </v-card>
+                  <v-row>
+                    <v-col cols="6" sm="4" lg="6">
+                      <SponsorCard user="gpotter2" userid="10530980" />
+                    </v-col>
+                    <v-col cols="6" sm="4" lg="6">
+                      <SponsorCard user="p-l-" userid="5064814" />
+                    </v-col>
+                    <v-col cols="6" sm="4" lg="6">
+                      <SponsorCard user="guedou" userid="11683796" />
+                    </v-col>
+                    <v-col cols="6" sm="4" lg="6">
+                      <SponsorCard user="polybassa" userid="1676055" />
+                    </v-col>
+                  </v-row>
                 </v-card-text>
               </v-card>
-            </div>
+            </v-container>
+            <!-- Downloads -->
+            <v-container fluid class="px-0 pb-0 pt-6 d-flex flex-column flex-grow-1">
+              <div ref="downloads_section" class="flex-grow-1">
+                <v-card variant="tonal" class="fill-height">
+                  <v-card-title>
+                    <h4>Downloads & Installation</h4>
+                  </v-card-title>
+                  <v-card-text class="text-body-2">
+                    <p>
+                      There are several ways of installing Scapy, depending on your plateform.
+                    </p>
+                    <p class="pb-3">
+                      Please also have a look at the
+                      full documentation, which contains
+                      <a href="https://scapy.readthedocs.io/en/latest/installation.html" class="text-primary">more
+                        installation
+                        instructions.
+                      </a>
+                    </p>
+                    <v-card color="transparent">
+                      <v-tabs show-arrows v-model="dllTab" bg-color="primary" density="compact" slider-color="#314C46">
+                        <v-tab value="pypi">PyPI</v-tab>
+                        <v-tab value="windows">Windows</v-tab>
+                        <v-tab value="github">Github</v-tab>
+                        <v-tab value="conda">Conda</v-tab>
+                        <v-tab value="debian">Debian/Ubuntu</v-tab>
+                        <v-tab value="other">More</v-tab>
+                      </v-tabs>
+                      <v-card-text>
+                        <v-window v-model="dllTab">
+                          <v-window-item value="pypi">
+                            <code class="bash"><span class="text-secondary">pip install scapy</span></code>
+                          </v-window-item>
+                          <v-window-item value="github">
+                            <code
+                              class="bash"><span class="text-secondary">pip install https://github.com/secdev/scapy/archive/refs/heads/master.zip</span></code>
+                          </v-window-item>
+                          <v-window-item value="conda">
+                            <code
+                              class="bash"><span class="text-secondary">conda install -c conda-forge scapy</span></code>
+                          </v-window-item>
+                          <v-window-item value="debian">
+                            <code class="bash"><span class="text-secondary">sudo apt install python3-scapy</span></code>
+                          </v-window-item>
+                          <v-window-item value="windows">
+                            <p class="pb-2">
+                              You will need to install <a class="text-secondary"
+                                href="https://npcap.com/#download">Npcap</a>
+                              (included if you have Wireshark), then use another installation method (PyPI, Github, etc.)
+                            </p>
+                            <v-btn href="https://npcap.com/#download" color="secondary">
+                              Download Npcap
+                              <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
+                            </v-btn>
+                          </v-window-item>
+                          <v-window-item value="other">
+                            <p class="pb-2">
+                              More platform-specific instructions (MacOS, BSD...) are available in the full documentation:
+                            </p>
+                            <v-btn
+                              href="https://scapy.readthedocs.io/en/latest/installation.html#platform-specific-instructions"
+                              color="secondary">
+                              Other instructions
+                              <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
+                            </v-btn>
+                          </v-window-item>
+                        </v-window>
+                      </v-card-text>
+                    </v-card>
+                  </v-card-text>
+                </v-card>
+              </div>
+            </v-container>
           </v-col>
         </v-row>
       </v-col>
     </v-row>
+    <!-- Try Scapy -->
+    <v-dialog v-if="showTryScapy" :model-value="showTryScapy" fullscreen>
+      <v-toolbar dark color="primary">
+        <v-btn icon dark @click="setTryScapy(false)">
+          <v-icon :icon="mdiClose"></v-icon>
+        </v-btn>
+        Scapy DEMO
+      </v-toolbar>
+      <v-card class="d-block">
+        <Try></Try>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -276,19 +304,44 @@ import ScapyS from '@/components/ScapyS.vue'
 import SponsorCard from '@/components/SponsorCard.vue'
 import TerminalFrame from '@/components/TerminalFrame.vue'
 import XTerm from '@/components/XTerm.vue'
+import Try from '@/views/Try.vue'
 
 import { useDisplay } from 'vuetify';
 import { inject, computed, onMounted, ref, watchEffect } from 'vue';
-import type { Ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router';
 
-import { mdiOpenInNew } from '@mdi/js';
+import type { Ref } from 'vue';
+
+import {
+  mdiBook,
+  mdiClose,
+  mdiOpenInNew,
+  mdiPresentation,
+  mdiPresentationPlay,
+  mdiNotebook,
+  mdiWeb,
+} from '@mdi/js';
 
 const version = '2.5.0';
 
 const animationOk = ref(false);
 const downloads_section = inject<Ref<HTMLDivElement | null>>('downloads_section');
 
-const { smAndDown, lg } = useDisplay();
+/* Modal control */
+const route = useRoute();
+const showTryScapy = computed(() => {
+  return Boolean(route.query.try);
+});
+const router = useRouter();
+function setTryScapy(set: Boolean) {
+  if (set) {
+    router.push({ query: { try: 1 } })
+  } else {
+    router.push({});
+  }
+}
+
+const { smAndDown, smAndUp, lg } = useDisplay();
 /* Wait 1s (animation time), if big screen, then display Home */
 onMounted(() => {
   if (smAndDown.value) {
@@ -356,11 +409,199 @@ Received 2 packets, got 1 answers, remaining 0 packets
   \x1b[34munused\x1b[0m    \x1b[0m=\x1b[0m \x1b[35mb''\x1b[0m
 `;
 
-/* Download tabs */
-const dllTab = ref("pypi");
-
 /* Export base URL */
 const BASE_URL = import.meta.env.BASE_URL;
+
+/* Resources */
+const RESOURCES = [
+  {
+    title: "Scapy in 0x30 minutes",
+    author: "guedou",
+    links: [
+      {
+        tooltip: "Slides",
+        icon: mdiPresentation,
+        link: "https://guedou.github.io/talks/2022_GreHack/Scapy in 0x30 minutes.slides.html",
+      },
+      {
+        tooltip: "Notebook",
+        icon: mdiNotebook,
+        link: "https://github.com/guedou/guedou.github.io/blob/master/talks/2022_GreHack/Scapy%20in%200x30%20minutes.ipynb"
+      }
+    ]
+  },
+  {
+    title: "Scapy in 15 minutes (or longer)",
+    author: "guedou and p-l-",
+    links: [
+      {
+        tooltip: "Notebook",
+        icon: mdiNotebook,
+        link: "https://github.com/secdev/scapy/blob/master/doc/notebooks/Scapy%20in%2015%20minutes.ipynb"
+      }
+    ]
+  },
+  {
+    title: "Scapy Turned 18. Boy They Grow Up Fast, Don’t They - SharkFest’21 Keynote",
+    author: "guedou",
+    links: [
+      {
+        tooltip: "Slides",
+        icon: mdiPresentation,
+        link: "https://guedou.github.io/talks/2021_sharkfest/slides.pdf"
+      },
+      {
+        tooltip: "Video",
+        icon: mdiPresentationPlay,
+        link: "https://www.youtube.com/watch?v=krZ3fOCTlfs"
+      },
+    ]
+  },
+  {
+    title: "ThePacketGeek.com's Building Network Tools with Scapy tutorial",
+    author: "thePacketGeek",
+    links: [
+      {
+        tooltip: "Website",
+        icon: mdiWeb,
+        link: "https://thepacketgeek.com/scapy/building-network-tools/"
+      }
+    ]
+  },
+  {
+    title: "Security Power Tools",
+    author: "Philippe Biondi",
+    links: [
+      {
+        tooltip: "Book",
+        icon: mdiBook,
+        link: "https://www.oreilly.com/catalog/9780596009632/",
+      }
+    ]
+  },
+  // Commented out. Unobtainable at this point
+  // {
+  //   title: "Various articles in French Security Magazines",
+  //   author: "Philippe Biondi",
+  //   links: [
+  //     {
+  //       tooltip: "MISC HS 11",
+  //       icon: mdiBook,
+  //       link: "https://boutique.ed-diamond.com/home/863-misc-hs-11.html",
+  //     },
+  //     {
+  //       tooltip: "MISC 52",
+  //       icon: mdiBook,
+  //       link: "https://boutique.ed-diamond.com/numeros-deja-parus/354-misc52.html",
+  //     },
+  //     {
+  //       tooltip: "GNU HS90",
+  //       icon: mdiBook,
+  //       link: "https://boutique.ed-diamond.com/les-hors-series/1245-gnulinux-magazine-hs-90.html",
+  //     }
+  //   ]
+  // }
+]
+
+/* Conferences */
+const CONFERENCES = [
+  {
+    "title": "Automotive Network Scans with Scapy",
+    "venue": "Troopers 2022",
+    "links": [
+      {
+        tooltip: "Slides",
+        icon: mdiPresentation,
+        link: BASE_URL + "talks/troopers2022/main.slides.html",
+      }
+    ]
+  },
+  {
+    "title": "Automotive Penetration Testing with Scapy",
+    "venue": "Troopers 2019",
+    "links": [
+      {
+        tooltip: "Slides",
+        icon: mdiPresentation,
+        link: BASE_URL + "talks/scapy_pacsec05.pdf",
+      }
+    ]
+  },
+  {
+    "title": "Network packet forgery with Scapy",
+    "venue": "PacSec/core05",
+    "links": [
+      {
+        tooltip: "Slides",
+        icon: mdiPresentation,
+        link: BASE_URL + "talks/scapy_pacsec05.pdf",
+      },
+      {
+        tooltip: "Handout",
+        icon: mdiNotebook,
+        link: BASE_URL + "talks/scapy_pacsec05.handout.pdf",
+      }
+    ]
+  },
+  {
+    "title": "Network packet manipulation with Scapy",
+    "venue": "Hack.lu 2005",
+    "links": [
+      {
+        tooltip: "Slides",
+        icon: mdiPresentation,
+        link: BASE_URL + "talks/scapy_hack.lu.pdf",
+      }
+    ]
+  },
+  {
+    "title": "Network packet manipulation with Scapy",
+    "venue": "Summer school Applied IT 2005",
+    "links": [
+      {
+        tooltip: "Slides",
+        icon: mdiPresentation,
+        link: BASE_URL + "talks/scapy_Aachen.pdf",
+      }
+    ]
+  },
+  {
+    "title": "Scapy: explore the net with new eyes",
+    "venue": "T2’2005",
+    "links": [
+      {
+        tooltip: "Slides",
+        icon: mdiPresentation,
+        link: BASE_URL + "talks/scapy_T2.pdf",
+      }
+    ]
+  },
+  {
+    "title": "Packet generation and network based attacks with Scapy",
+    "venue": "CanSecWest/core05",
+    "links": [
+      {
+        tooltip: "Slides",
+        icon: mdiPresentation,
+        link: BASE_URL + "talks/scapy_csw05.pdf",
+      }
+    ]
+  },
+  {
+    "title": "Scapy : interactive packet manipulation",
+    "venue": "LSM 2003",
+    "links": [
+      {
+        tooltip: "Slides",
+        icon: mdiPresentation,
+        link: BASE_URL + "talks/scapy_lsm2003.pdf",
+      }
+    ]
+  },
+];
+
+/* Download tabs */
+const dllTab = ref("pypi");
 </script>
 
 <style scoped>

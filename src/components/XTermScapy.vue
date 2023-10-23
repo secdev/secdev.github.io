@@ -293,7 +293,7 @@ term.onData(e => {
                     if (result.length > 0) {
                         term.write(result.replaceAll("\n", "\r\n"));
                     } else if (output != undefined) {
-                        term.write(output + '\n');
+                        term.write(output.toString().replaceAll("\n", "\r\n") + '\r\n');
                     }
                     prompt();
                 }).catch((err: any) => {

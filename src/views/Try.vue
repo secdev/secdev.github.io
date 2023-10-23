@@ -1,18 +1,18 @@
 <template>
-    <v-row justify="center" class="mt-0 mb-1 px-2 px-sm-0">
-        <v-col cols="12" sm="6">
+    <v-row justify="center" class="mt-0 mb-1 px-2 px-lg-0">
+        <v-col cols="12" lg="6" class="pb-0">
             <TerminalFrame>
                 <XTermScapy />
             </TerminalFrame>
         </v-col>
-        <v-col cols="12" sm="3">
+        <v-col cols="12" lg="4">
             <v-card variant="tonal">
                 <v-card-title>
                     Try Scapy in your browser !
                 </v-card-title>
                 <v-card-text>
                     <p>
-                        You can <span class="text-primary">try Scapy</span> in the Terminal on the left.
+                        You can <span class="text-primary">try Scapy</span> in the nearby Terminal.
                     </p>
                     <p class="mt-3">
                         Please note that the experience is very limited, most notably:
