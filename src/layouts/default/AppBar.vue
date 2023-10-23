@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import githubAsset from '@/assets/github-mark-white.svg';
+import githubAsset from '@/assets/logos/github-mark-white.svg';
 import { inject } from 'vue'
 import type { Ref } from 'vue'
 

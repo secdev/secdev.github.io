@@ -84,11 +84,10 @@
             <TerminalFrame style="position: relative;">
               <XTerm :static="DEMO_CODE" class="scapy-term" />
               <div style="position: absolute; right: 5px; bottom: 5px;">
-
                 <v-tooltip text="Try Scapy" location="start">
                   <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" class="px-0" min-width="36px" color="yellow" @click="setTryScapy(true)">
-                      >_
+                      <span class="font-weight-bold">>_</span>
                     </v-btn>
                   </template>
                 </v-tooltip>
@@ -166,7 +165,7 @@
                           <v-tooltip :text="link.tooltip" v-for="(link, j) in item.links" :key="j">
                             <template v-slot:activator="{ props }">
                               <v-btn v-bind="props" :icon="link.icon" variant="plain" :href="link.link" color="secondary"
-                                size="small"></v-btn>
+                                :size="smAndDown ? 'x-small' : 'small'"></v-btn>
                             </template>
                           </v-tooltip>
                         </div>
@@ -218,62 +217,69 @@
                     <p>
                       There are several ways of installing Scapy, depending on your plateform.
                     </p>
-                    <p class="pb-3">
+                    <p>
                       Please also have a look at the
                       full documentation, which contains
-                      <a href="https://scapy.readthedocs.io/en/latest/installation.html" class="text-primary">more
-                        installation
-                        instructions.
+                      <a href="https://scapy.readthedocs.io/en/latest/installation.html" class="text-primary">
+                        more installation instructions.
                       </a>
                     </p>
-                    <v-card color="transparent">
-                      <v-tabs show-arrows v-model="dllTab" bg-color="primary" density="compact" slider-color="#314C46">
-                        <v-tab value="pypi">PyPI</v-tab>
-                        <v-tab value="windows">Windows</v-tab>
-                        <v-tab value="github">Github</v-tab>
-                        <v-tab value="conda">Conda</v-tab>
-                        <v-tab value="debian">Debian/Ubuntu</v-tab>
-                        <v-tab value="other">More</v-tab>
-                      </v-tabs>
+                    <v-row class="py-2 mt-1">
+                      <!-- OS picker -->
+                      <v-col cols="auto">
+                        <v-btn-toggle v-model="dllOS" mandatory>
+                          <v-btn v-for="os in OS" :value="os.name" :key="os.name" icon
+                            :size="smAndDown ? 'small' : 'default'">
+                            <v-icon v-if="os.logo"><v-img :src="os.logo" /></v-icon>
+                            <span v-else>{{ os.text }}</span>
+                          </v-btn>
+                        </v-btn-toggle>
+                      </v-col>
+                      <v-spacer></v-spacer>
+                      <v-col cols="auto">
+                        <v-btn-toggle v-model="dllMethod" mandatory>
+                          <v-btn v-for="method in METHODS" :value="method.name" :key="method.name" icon
+                            :size="smAndDown ? 'small' : 'default'">
+                            <v-icon><v-img :src="method.logo" /></v-icon>
+                          </v-btn>
+                        </v-btn-toggle>
+                      </v-col>
+                    </v-row>
+                    <v-card>
                       <v-card-text>
-                        <v-window v-model="dllTab">
-                          <v-window-item value="pypi">
-                            <code class="bash"><span class="text-secondary">pip install scapy</span></code>
-                          </v-window-item>
-                          <v-window-item value="github">
-                            <code
-                              class="bash"><span class="text-secondary">pip install https://github.com/secdev/scapy/archive/refs/heads/master.zip</span></code>
-                          </v-window-item>
-                          <v-window-item value="conda">
-                            <code
-                              class="bash"><span class="text-secondary">conda install -c conda-forge scapy</span></code>
-                          </v-window-item>
-                          <v-window-item value="debian">
-                            <code class="bash"><span class="text-secondary">sudo apt install python3-scapy</span></code>
-                          </v-window-item>
-                          <v-window-item value="windows">
-                            <p class="pb-2">
-                              You will need to install <a class="text-secondary"
-                                href="https://npcap.com/#download">Npcap</a>
-                              (included if you have Wireshark), then use another installation method (PyPI, Github, etc.)
-                            </p>
-                            <v-btn href="https://npcap.com/#download" color="secondary">
-                              Download Npcap
-                              <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
-                            </v-btn>
-                          </v-window-item>
-                          <v-window-item value="other">
-                            <p class="pb-2">
-                              More platform-specific instructions (MacOS, BSD...) are available in the full documentation:
-                            </p>
-                            <v-btn
-                              href="https://scapy.readthedocs.io/en/latest/installation.html#platform-specific-instructions"
-                              color="secondary">
-                              Other instructions
-                              <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
-                            </v-btn>
-                          </v-window-item>
-                        </v-window>
+                        <!-- OS specific instructions -->
+                        <p class="pb-2" v-show="dllOS == 'windows'">
+                          You will need to install <a class="text-secondary" href="https://npcap.com/">Npcap</a>
+                          (included if you have Wireshark).
+                        </p>
+                        <p class="pb-2" v-show="dllOS == 'other'">
+                          More platform-specific instructions (MacOS, BSD...) are available in the full documentation:
+                        </p>
+                        <p class="text-center pb-4" v-show="dllOS == 'windows'">
+                          <v-btn href="https://npcap.com/#download" color="secondary">
+                            Download Npcap
+                            <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
+                          </v-btn>
+                        </p>
+                        <p class="text-center pb-4" v-show="dllOS == 'other'">
+                          <v-btn
+                            href="https://scapy.readthedocs.io/en/latest/installation.html#platform-specific-instructions"
+                            color="secondary">
+                            Other instructions
+                            <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
+                          </v-btn>
+                        </p>
+                        <code class="bash"
+                          v-show="dllOS == 'debian'"><span class="text-secondary">{{ INSTRUCTIONS['debian'] }}</span></code>
+                      </v-card-text>
+                    </v-card>
+                    <div class="text-center pa-1 font-weight-bold">
+                      {{ (dllOS == 'debian') ? 'OR' : 'AND' }}
+                    </div>
+                    <v-card>
+                      <v-card-text>
+                        <!-- Methods -->
+                        <code class="bash"><span class="text-secondary">{{ INSTRUCTIONS[dllMethod] }}</span></code>
                       </v-card-text>
                     </v-card>
                   </v-card-text>
@@ -286,7 +292,7 @@
     </v-row>
     <!-- Try Scapy -->
     <v-dialog v-if="showTryScapy" :model-value="showTryScapy" fullscreen>
-      <v-toolbar dark color="primary">
+      <v-toolbar dark color="primary" density="compact">
         <v-btn icon dark @click="setTryScapy(false)">
           <v-icon :icon="mdiClose"></v-icon>
         </v-btn>
@@ -406,8 +412,7 @@ Received 2 packets, got 1 answers, remaining 0 packets
   \x1b[34mchksum\x1b[0m    \x1b[0m=\x1b[0m \x1b[35m0xffff\x1b[0m
   \x1b[34mid\x1b[0m        \x1b[0m=\x1b[0m \x1b[35m0x0\x1b[0m
   \x1b[34mseq\x1b[0m       \x1b[0m=\x1b[0m \x1b[35m0x0\x1b[0m
-  \x1b[34munused\x1b[0m    \x1b[0m=\x1b[0m \x1b[35mb''\x1b[0m
-`;
+  \x1b[34munused\x1b[0m    \x1b[0m=\x1b[0m \x1b[35mb''\x1b[0m`;
 
 /* Export base URL */
 const BASE_URL = import.meta.env.BASE_URL;
@@ -497,7 +502,7 @@ const RESOURCES = [
   //     {
   //       tooltip: "GNU HS90",
   //       icon: mdiBook,
-  //       link: "https://boutique.ed-diamond.com/les-hors-series/1245-gnulinux-magazine-hs-90.html",
+  //       link: "https://boutique.ed-diamond.com/les-hors-series/1245-gnudebian-magazine-hs-90.html",
   //     }
   //   ]
   // }
@@ -600,8 +605,59 @@ const CONFERENCES = [
   },
 ];
 
+/* Naïve OS detection */
+function defaultOS() {
+  //@ts-ignore
+  const platform = (navigator.userAgentData && navigator.userAgentData.platform || navigator.platform).toLowerCase();
+  if (platform.includes("win")) return "windows";
+  if (platform.includes("linux")) return "debian";
+  return "other";
+}
+
 /* Download tabs */
-const dllTab = ref("pypi");
+import debianLogo from '@/assets/logos/debian.svg';
+import windowsLogo from '@/assets/logos/windows.svg';
+import pypiLogo from '@/assets/logos/pypi.svg';
+import condaLogo from '@/assets/logos/conda.svg';
+import githubLogo from '@/assets/logos/github-mark-white.svg';
+
+const dllOS = ref(defaultOS());
+const dllMethod = ref("pypi");
+const OS = [
+  {
+    name: "debian",
+    logo: debianLogo,
+  },
+  {
+    name: "windows",
+    logo: windowsLogo,
+  },
+  {
+    name: "other",
+    text: "?",
+  }
+];
+const METHODS = [
+  {
+    name: "pypi",
+    logo: pypiLogo,
+  },
+  {
+    name: "github",
+    logo: githubLogo,
+  },
+  {
+    name: "conda",
+    logo: condaLogo,
+  },
+];
+const INSTRUCTIONS: Record<string, string> = {
+  "pypi": "pip install scapy",
+  "debian": "sudo apt install python3-scapy",
+  "github": "pip install https://github.com/secdev/scapy/archive/refs/heads/master.zip",
+  "conda": "conda install -c conda-forge scapy",
+};
+
 </script>
 
 <style scoped>

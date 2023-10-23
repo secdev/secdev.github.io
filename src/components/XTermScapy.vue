@@ -27,7 +27,7 @@ import { startXterm, showCursor, hideCursor, disableStdin } from '@/components/X
 
 // Python variables
 const pyodideIndexURL = "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/";
-import scapyWheelURL from '@/assets/scapy-2.5.0.dev175-py3-none-any.whl?url';
+import scapyWheelURL from '@/assets/scapy-2.5.0.dev177-py3-none-any.whl?url';
 
 // XTerm.js
 const terminal: Ref<HTMLElement | null> = ref(null); // container
