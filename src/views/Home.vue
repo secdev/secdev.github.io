@@ -224,9 +224,14 @@
                         more installation instructions.
                       </a>
                     </p>
-                    <v-row class="py-2 mt-1">
+                    <v-row class="py-2 ma-0" justify="center">
                       <!-- OS picker -->
-                      <v-col cols="auto">
+                      <v-col cols="12" class="py-0">
+                        <p class="text-center text-h6 pa-0">
+                          Choose your OS
+                        </p>
+                      </v-col>
+                      <v-col cols="auto" class="pb-1">
                         <v-btn-toggle v-model="dllOS" mandatory>
                           <v-btn v-for="os in OS" :value="os.name" :key="os.name" icon
                             :size="smAndDown ? 'small' : 'default'">
@@ -235,10 +240,17 @@
                           </v-btn>
                         </v-btn-toggle>
                       </v-col>
-                      <v-spacer></v-spacer>
+                    </v-row>
+                    <v-row class="pb-2 ma-0" justify="center">
+                      <!-- Env picker -->
+                      <v-col cols="12" class="py-0">
+                        <p class="text-center text-h6">
+                          Choose an install method
+                        </p>
+                      </v-col>
                       <v-col cols="auto">
                         <v-btn-toggle v-model="dllMethod" mandatory>
-                          <v-btn v-for="method in METHODS" :value="method.name" :key="method.name" icon
+                          <v-btn v-for="method in getMethods()" :value="method.name" :key="method.name" icon
                             :size="smAndDown ? 'small' : 'default'">
                             <v-icon><v-img :src="method.logo" /></v-icon>
                           </v-btn>
@@ -255,26 +267,33 @@
                         <p class="pb-2" v-show="dllOS == 'other'">
                           More platform-specific instructions (MacOS, BSD...) are available in the full documentation:
                         </p>
-                        <p class="text-center pb-4" v-show="dllOS == 'windows'">
+                        <p class="pb-2" v-show="dllOS == 'linux'">
+                          Some features require to have <span class="text-primary">libpcap</span> installed (by default on
+                          most distributions). For more
+                          information, see the <a
+                            href="https://scapy.readthedocs.io/en/latest/installation.html#platform-specific-instructions"
+                            class="text-secondary">full
+                            documentation</a>.
+                        </p>
+                        <p class="text-center" v-show="dllOS == 'windows'">
                           <v-btn href="https://npcap.com/#download" color="secondary">
                             Download Npcap
                             <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
                           </v-btn>
                         </p>
-                        <p class="text-center pb-4" v-show="dllOS == 'other'">
+                        <p class="text-center" v-show="dllOS == 'other'">
                           <v-btn
                             href="https://scapy.readthedocs.io/en/latest/installation.html#platform-specific-instructions"
                             color="secondary">
-                            Other instructions
+                            Full Installation documentation
                             <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
                           </v-btn>
                         </p>
-                        <code class="bash"
-                          v-show="dllOS == 'debian'"><span class="text-secondary">{{ INSTRUCTIONS['debian'] }}</span></code>
+
                       </v-card-text>
                     </v-card>
                     <div class="text-center pa-1 font-weight-bold">
-                      {{ (dllOS == 'debian') ? 'OR' : 'AND' }}
+                      AND
                     </div>
                     <v-card>
                       <v-card-text>
@@ -610,27 +629,28 @@ function defaultOS() {
   //@ts-ignore
   const platform = (navigator.userAgentData && navigator.userAgentData.platform || navigator.platform).toLowerCase();
   if (platform.includes("win")) return "windows";
-  if (platform.includes("linux")) return "debian";
+  if (platform.includes("linux")) return "linux";
   return "other";
 }
 
 /* Download tabs */
-import debianLogo from '@/assets/logos/debian.svg';
+import linuxLogo from '@/assets/logos/linux.svg';
 import windowsLogo from '@/assets/logos/windows.svg';
 import pypiLogo from '@/assets/logos/pypi.svg';
-import condaLogo from '@/assets/logos/conda.svg';
+import debianLogo from '@/assets/logos/debian.svg';
 import githubLogo from '@/assets/logos/github-mark-white.svg';
+import condaLogo from '@/assets/logos/conda.svg';
 
 const dllOS = ref(defaultOS());
 const dllMethod = ref("pypi");
 const OS = [
   {
-    name: "debian",
-    logo: debianLogo,
-  },
-  {
     name: "windows",
     logo: windowsLogo,
+  },
+  {
+    name: "linux",
+    logo: linuxLogo,
   },
   {
     name: "other",
@@ -647,10 +667,25 @@ const METHODS = [
     logo: githubLogo,
   },
   {
+    name: "debian",
+    logo: debianLogo,
+    condition: "linux",
+  },
+  {
     name: "conda",
     logo: condaLogo,
   },
 ];
+
+function getMethods() {
+  return METHODS.filter(x => !x.condition || x.condition == dllOS.value);
+}
+
+watchEffect(() => {
+  if (dllMethod.value == "debian" && dllOS.value != "linux")
+    dllMethod.value = "pypi";
+})
+
 const INSTRUCTIONS: Record<string, string> = {
   "pypi": "pip install scapy",
   "debian": "sudo apt install python3-scapy",
