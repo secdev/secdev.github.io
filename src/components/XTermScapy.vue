@@ -17,10 +17,9 @@
     <div id="terminal" ref="terminal"></div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 // JS Imports
-import { ref, onMounted, Ref } from 'vue';
-import { useDisplay } from 'vuetify';
+import { ref, Ref } from 'vue';
 import { Terminal } from 'xterm';
 import { loadPyodide } from 'pyodide';
 import { startXterm, showCursor, hideCursor, disableStdin } from '@/components/XTerm.vue';
@@ -29,13 +28,9 @@ import { startXterm, showCursor, hideCursor, disableStdin } from '@/components/X
 const pyodideIndexURL = "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/";
 const scapyWheelURL = new URL(`/${process.env.scapywhl}`, import.meta.url).href;
 
-// XTerm.js
-const terminal: Ref<HTMLElement | null> = ref(null); // container
-const term = new Terminal(); // xterm.js object
-
 // Constants
 const VK_RETURN = '\r';
-const VK_CLEAR = "\u000c";
+const VK_CLEAR = '\u000c';
 const VK_DELETE = '\u007F';
 const VK_CANCEL = '\u0003';
 const VK_UP = '\x1b[A';
@@ -47,13 +42,34 @@ const VK_CTRL_LEFT = '\x1b[1;5D';
 const VK_SUPPR = '\x1b[3~';
 
 // Terminal utils
-var pyodide: any = null;
 var pythonCodeX = 0;
 var pythonCodeY = 0;
 var historyCodeList: string[] = [];
 var lastPythonCodeLine = "";
 var renderingCode = true;
 var stdout_codes: Array<number> = [];
+
+// pyodide
+var pyodide: any = null;
+
+// XTerm.js
+const terminal: Ref<HTMLElement | null> = ref(null); // container
+const term = new Terminal(); // xterm.js object
+
+export function mountFile(file: File) {
+    /*
+     * Mount a File
+     */
+    const freader = new FileReader();
+    freader.addEventListener('loadend', () => {
+        //@ts-ignore
+        pyodide.FS.writeFile(file.name, new Uint8Array(freader.result));
+        term.write(`\x1b[0m\rFile '${file.name}' was imported in the Emscripten file system !\n`);
+        pythonCodeY = term.buffer.normal.cursorY + term.buffer.normal.baseY + 1;
+        displayCurrentPrompt();
+    });
+    freader.readAsArrayBuffer(file);
+}
 
 function rawstdout(code: number) {
     /*
@@ -87,50 +103,6 @@ function prompt() {
      */
     term.write('\r\x1b[34m>>> ');
 };
-
-const { smAndDown } = useDisplay();
-
-async function startPyodide() {
-    /*
-     * Load pyodide and Scapy
-     */
-    term.write('Loading Python...');
-    pyodide = await loadPyodide({
-        indexURL: pyodideIndexURL,
-    });
-    await pyodide.loadPackage("pygments")
-    await pyodide.loadPackage("micropip")
-    await pyodide.loadPackage("ssl")
-
-    term.write('\rLoading Scapy... ');
-    await pyodide.loadPackage(scapyWheelURL);
-    // await scapyInstall();
-    await pyodide.runPythonAsync(`
-        from scapy.all import *
-        conf.color_theme = DefaultTheme()
-    `);
-
-    pyodide.setStdout({ raw: rawstdout, isatty: true });
-
-    let mini = "False";
-    if (smAndDown.value) {
-        mini = "True";
-    }
-
-    await pyodide.runPythonAsync(`
-        import sys
-        from pygments import highlight
-        from pygments.lexers import PythonLexer
-        from pygments.formatters import TerminalTrueColorFormatter
-        print(get_fancy_banner(` + mini + `))
-    `).then(() => {
-        let result = new TextDecoder().decode(new Uint8Array(stdout_codes));
-        term.write('\r' + result.replaceAll("\n", "\r\n") + '\r\n');
-        prompt();
-        renderingCode = false;
-    }
-    );
-}
 
 var pythonCode = '';
 var blockFlag = "";
@@ -206,7 +178,6 @@ term.onData(e => {
             lastCRIndex = pythonCode.lastIndexOf('\r');
             lastPythonCodeLine = pythonCode.substring(lastCRIndex + 1, pythonCode.length + 1);
             let spaceIndex;
-            let codeLen = pythonCode.length;
             if (e == VK_CTRL_LEFT) {
                 lastPythonCodeLine = " " + lastPythonCodeLine;
                 lastPythonCodeLine = lastPythonCodeLine.slice(0, term.buffer.normal.cursorX - 4);
@@ -341,6 +312,8 @@ term.onData(e => {
             term.clear();
             break;
         default:
+            // debug
+            for (let i = 0; i < e.length; i++) console.log(e.charCodeAt(i));
             // other key pressed
             if (e >= String.fromCharCode(0x20) && e <= String.fromCharCode(0x7E) || e >= '\u00a0') {
                 // printable
@@ -375,13 +348,59 @@ term.onData(e => {
 //     const micropip = pyodide.pyimport("micropip");
 //     await micropip.install("emfs:/dist/scapy-2.5.0.dev171-py3-none-any.whl")
 // }
+</script>
+
+<script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue';
+import { useDisplay } from 'vuetify';
+
+const { smAndDown } = useDisplay();
+
+async function startPyodide() {
+    /*
+     * Load pyodide and Scapy
+     */
+    term.write('Loading Python...');
+    pyodide = await loadPyodide({
+        indexURL: pyodideIndexURL,
+    });
+    await pyodide.loadPackage("pygments")
+    await pyodide.loadPackage("micropip")
+    await pyodide.loadPackage("ssl")
+
+    term.write('\rLoading Scapy... ');
+    await pyodide.loadPackage(scapyWheelURL);
+    // await scapyInstall();
+    await pyodide.runPythonAsync(`
+        from scapy.all import *
+        conf.color_theme = DefaultTheme()
+    `);
+
+    pyodide.setStdout({ raw: rawstdout, isatty: true });
+
+    let mini = "False";
+    if (smAndDown.value) {
+        mini = "True";
+    }
+
+    await pyodide.runPythonAsync(`
+        import sys
+        from pygments import highlight
+        from pygments.lexers import PythonLexer
+        from pygments.formatters import TerminalTrueColorFormatter
+        print(get_fancy_banner(` + mini + `))
+    `).then(() => {
+        let result = new TextDecoder().decode(new Uint8Array(stdout_codes));
+        term.write('\r' + result.replaceAll("\n", "\r\n") + '\r\n');
+        prompt();
+        renderingCode = false;
+    }
+    );
+}
 
 // Startup hook
 onMounted(async () => {
-    try {
-        await startXterm(term, terminal);
-        await startPyodide();
-    } catch (ex: any) {
+    startXterm(term, terminal).then(startPyodide).catch((ex) => {
         disableStdin(term);
         let msg = ex.toString();
         term.write('\rUnexpected failure.           \r\n');
@@ -391,7 +410,12 @@ onMounted(async () => {
                 term.write("On Apple devices, you could be using Lockdown Mode.\r\n");
             }
         } catch { }
-    }
+    });
+});
+
+// Exit hook
+onUnmounted(() => {
+    term.dispose();
 });
 </script>
 
