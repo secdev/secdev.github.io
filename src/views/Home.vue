@@ -285,7 +285,7 @@
                           <v-btn
                             href="https://scapy.readthedocs.io/en/latest/installation.html#platform-specific-instructions"
                             color="secondary">
-                            Full Installation documentation
+                            More instructions
                             <v-icon class="ml-1" :icon="mdiOpenInNew"></v-icon>
                           </v-btn>
                         </p>
