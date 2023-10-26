@@ -5,11 +5,15 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 // Utilities
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
+import { readdirSync } from 'fs'
+
+// Most recent Scapy wheel
+const scapywhl = "src/assets/" + readdirSync('src/assets').filter(fn => fn.endsWith('.whl'))[0];
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue({ 
+    vue({
       template: { transformAssetUrls }
     }),
     // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
@@ -20,7 +24,11 @@ export default defineConfig({
       },
     }),
   ],
-  define: { 'process.env': {} },
+  define: {
+    'process.env': {
+      'scapywhl': scapywhl,
+    }
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -37,9 +45,7 @@ export default defineConfig({
     ],
   },
   // for scapy pyodide assets
-  assetsInclude: [
-    'src/assets/*.whl'
-  ],
+  assetsInclude: [scapywhl],
   server: {
     port: 3000,
     watch: {

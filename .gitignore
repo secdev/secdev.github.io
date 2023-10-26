@@ -2,6 +2,9 @@
 node_modules
 /dist
 
+# wheel
+*.whl
+
 # local env files
 .env.local
 .env.*.local
