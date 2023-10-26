@@ -400,6 +400,11 @@ async function startPyodide() {
 
 // Startup hook
 onMounted(async () => {
+    // reset existing
+    term.reset();
+    stdout_codes = [];
+    historyCodeList = [];
+    // start xterm.js and pyodide
     startXterm(term, terminal).then(startPyodide).catch((ex) => {
         disableStdin(term);
         let msg = ex.toString();
