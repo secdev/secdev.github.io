@@ -88,7 +88,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-        <v-container class="fill-height px-0">
+        <v-container class="fill-height pa-0">
                 <!-- Only show arriving animation on bigger screens -->
                 <div :class="'text-justify fill-height scapy-logo' + (smAndDown ? ' mini' : '')" v-html="logo">
                 </div>
