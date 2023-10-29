@@ -39,3 +39,11 @@ a:visited {
   color: inherit;
 }
 </style>
+
+<style>
+/* Fix mobile horizontal scrolling */
+html,
+body {
+  overflow-x: hidden;
+}
+</style>
