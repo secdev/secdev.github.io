@@ -9,7 +9,7 @@
             - Ctrl+arrows
             - Ctrl+L
             - Ctrl+C
-        - code cleanup
+        - code cleanup, greatly simplify terminal handling
         - bundle Scapy
 -->
 
@@ -47,7 +47,6 @@ var pythonCodeY = 0;
 var historyCodeList: string[] = [];
 var lastPythonCodeLine = "";
 var renderingCode = true;
-var stdout_codes: Array<number> = [];
 
 // pyodide
 var pyodide: any = null;
@@ -55,6 +54,12 @@ var pyodide: any = null;
 // XTerm.js
 const terminal: Ref<HTMLElement | null> = ref(null); // container
 const term = new Terminal(); // xterm.js object
+
+// Python terminal
+var pythonCode = '';
+var historyIndex = 0;
+var historyCode = "";
+var lastCRIndex = 0;
 
 export function mountFile(file: File) {
     /*
@@ -69,13 +74,6 @@ export function mountFile(file: File) {
         displayCurrentPrompt();
     });
     freader.readAsArrayBuffer(file);
-}
-
-function rawstdout(code: number) {
-    /*
-     * Add string to terminal output
-     */
-    stdout_codes.push(code);
 }
 
 function recalcFromPythonCode() {
@@ -104,19 +102,6 @@ function prompt() {
     term.write('\r\x1b[34m>>> ');
 };
 
-var pythonCode = '';
-var blockFlag = "";
-var blockMap: { [type: string]: string } = {
-    ":": "\r",
-    "\\": "\r",
-    "{": "}",
-    "[": "]",
-    "(": ")",
-}
-var historyIndex = 0;
-var historyCode = "";
-var lastCRIndex = 0;
-
 function setCursorPosition(x: Number, y: Number) {
     /*
      * Set the cursor position in the terminal
@@ -139,6 +124,17 @@ async function writeHighlightPythonCode(x: Number, y: Number, pythonCode: string
     `).then((output: string) => {
         term.write(output.replaceAll('\n', '\r\n... '));
     });
+}
+
+function writeByteOnTerm(data: number) {
+    /*
+     * Write to terminal output. Called directly by pyodide
+     */
+    if (data == 10) { // \n
+        term.write("\r\n");
+    } else {
+        term.write(new Uint8Array([data]));
+    }
 }
 
 function displayCurrentPrompt() {
@@ -237,47 +233,33 @@ term.onData(e => {
                 let pythonCodeList = pythonCode.split('\r');
                 let lastLine = pythonCodeList[pythonCodeList.length - 1];
                 if (lastLine.length > 0) {
-                    historyCodeList = historyCodeList.concat(lastLine)
-                }
-                if (((pythonCode[pythonCode.length - 1] in blockMap)) && (blockFlag === "")) {
-                    blockFlag = pythonCode[pythonCode.length - 1];
-                    pythonCode += e;
-                    term.writeln("\r");
-                    term.write('... ');
-                    break;
-                }
-                if (blockFlag != "") {
-                    if (pythonCode[pythonCode.length - 1] === blockMap[blockFlag]) {
-                        blockFlag = "";
-                    } else {
-                        pythonCode += e;
-                        term.writeln("\r");
-                        term.write('... ');
-                        break;
-                    }
+                    historyCodeList = historyCodeList.concat(lastLine);
                 }
                 term.writeln('\x1b[0m');
-
-                stdout_codes = []
-                pyodide.runPythonAsync(pythonCode).then((output: string) => {
-                    let result = new TextDecoder().decode(new Uint8Array(stdout_codes));
-                    if (result.length > 0) {
-                        term.write(result.replaceAll("\n", "\r\n"));
-                    } else if (output != undefined) {
-                        term.write(output.toString().replaceAll("\n", "\r\n") + '\r\n');
+                // We use code.InteractiveInterpreter to take detect incomplete inputs
+                pyodide.runPythonAsync(`
+                    _PY_code = """
+                    ${pythonCode.replaceAll("\\", "\\\\")}
+                    """
+                    _PY_EVAL.runsource(_PY_code)
+                `).then((incomplete: boolean) => {
+                    if(incomplete) {
+                        pythonCode += "\r";
+                        term.write("\r");
+                        term.write('... ');
+                    } else {
+                        pythonCode = '';
+                        prompt();
                     }
-                    prompt();
                 }).catch((err: any) => {
                     term.write('\x1b[01;31m' + err.message.replaceAll('\n', '\r\n') + '\x1b[0m');
                     prompt();
-                    pythonCode = ""
+                    pythonCode = '';
                 });
-
             } else {
                 term.writeln('\x1b[0m');
                 prompt();
             }
-            pythonCode = '';
             break;
         case VK_CANCEL:
             term.write('^C\r\n');
@@ -313,7 +295,7 @@ term.onData(e => {
             break;
         default:
             // debug
-            for (let i = 0; i < e.length; i++) console.log(e.charCodeAt(i));
+            // for (let i = 0; i < e.length; i++) console.log(e.charCodeAt(i));
             // other key pressed
             if (e >= String.fromCharCode(0x20) && e <= String.fromCharCode(0x7E) || e >= '\u00a0') {
                 // printable
@@ -368,21 +350,28 @@ async function startPyodide() {
     await pyodide.loadPackage("micropip")
     await pyodide.loadPackage("ssl")
 
+    // TODO: move output handlers here... when all Scapy loading issues are fixes
+
     term.write('\rLoading Scapy... ');
     await pyodide.loadPackage(scapyWheelURL);
     // await scapyInstall();
     await pyodide.runPythonAsync(`
         from scapy.all import *
         conf.color_theme = DefaultTheme()
+        import code
+        _PY_EVAL = code.InteractiveInterpreter(locals=globals())
     `);
 
-    pyodide.setStdout({ raw: rawstdout, isatty: true });
+    // Register output stdout / stderr
+    pyodide.setStdout({ raw: writeByteOnTerm, isatty: true });
+    pyodide.setStderr({ raw: writeByteOnTerm, isatty: true });
 
     let mini = "False";
     if (smAndDown.value) {
         mini = "True";
     }
 
+    term.write('\r');
     await pyodide.runPythonAsync(`
         import sys
         from pygments import highlight
@@ -390,19 +379,16 @@ async function startPyodide() {
         from pygments.formatters import TerminalTrueColorFormatter
         print(get_fancy_banner(` + mini + `))
     `).then(() => {
-        let result = new TextDecoder().decode(new Uint8Array(stdout_codes));
-        term.write('\r' + result.replaceAll("\n", "\r\n") + '\r\n');
         prompt();
         renderingCode = false;
-    }
-    );
+    });
 }
 
 // Startup hook
 onMounted(async () => {
     // reset existing
+    term.clear();
     term.reset();
-    stdout_codes = [];
     historyCodeList = [];
     // start xterm.js and pyodide
     startXterm(term, terminal).then(startPyodide).catch((ex) => {
@@ -416,11 +402,6 @@ onMounted(async () => {
             }
         } catch { }
     });
-});
-
-// Exit hook
-onUnmounted(() => {
-    term.dispose();
 });
 </script>
 
