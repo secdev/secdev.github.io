@@ -20,7 +20,7 @@ Philippe Biondi             - phil@secdev.org
 Maintainers of Scapy
 ```text
 Guillaume Valadon (@guedou) - guillaume@valadon.net
-Gabriel Potter              - gabriel@potter.fr
+Gabriel Potter              - 10530980+gpotter2@users.noreply.github.com
 Pierre Lalet (@pi3rre)      - pierre@droids-corp.org
 ```
 
