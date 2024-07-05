@@ -530,6 +530,17 @@ const RESOURCES = [
 /* Conferences */
 const CONFERENCES = [
   {
+    "title": "ScapyCon Automotive",
+    "venue": "ScapyCon 2024",
+    "links": [
+      {
+        tooltip: "Website",
+        icon: mdiWeb,
+        link: "https://scapycon.com"
+      }
+    ]
+  },
+  {
     "title": "Automotive Network Scans with Scapy",
     "venue": "Troopers 2022",
     "links": [
