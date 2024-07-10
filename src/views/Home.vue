@@ -536,7 +536,7 @@ const CONFERENCES = [
       {
         tooltip: "Website",
         icon: mdiWeb,
-        link: "https://scapycon.com"
+        link: "http://scapycon.com"
       }
     ]
   },
