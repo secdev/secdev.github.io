@@ -558,7 +558,7 @@ const CONFERENCES = [
       {
         tooltip: "Slides",
         icon: mdiPresentation,
-        link: BASE_URL + "talks/scapy_pacsec05.pdf",
+        link: BASE_URL + "talks/troopers2019/index.html",
       }
     ]
   },
