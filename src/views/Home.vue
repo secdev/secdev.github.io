@@ -347,7 +347,7 @@ import {
   mdiWeb,
 } from '@mdi/js';
 
-const version = '2.6.0';
+const version = '2.6.1';
 
 const animationOk = ref(false);
 const downloads_section = inject<Ref<HTMLDivElement | null>>('downloads_section');
