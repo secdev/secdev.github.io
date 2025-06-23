@@ -215,7 +215,7 @@
                   </v-card-title>
                   <v-card-text class="text-body-2">
                     <p>
-                      There are several ways of installing Scapy, depending on your plateform.
+                      There are several ways of installing Scapy, depending on your platform.
                     </p>
                     <p>
                       Please also have a look at the
