@@ -26,7 +26,7 @@ import { startXterm, showCursor, hideCursor, disableStdin } from '@/components/X
 
 // Python variables
 const pyodideIndexURL = "https://cdn.jsdelivr.net/pyodide/v0.28.2/full/";
-const scapyWheelURL = new URL(`/${process.env.scapywhl}`, import.meta.url).href;
+const scapyWheelURL = `/${process.env.scapywhl}`;
 
 // Constants
 const VK_RETURN = '\r';
