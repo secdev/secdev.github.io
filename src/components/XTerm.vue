@@ -1,10 +1,10 @@
 <template>
-    <div id="terminal" ref="terminal" style="height: 100%;"></div>
+    <div id="terminal" ref="terminal" style="max-height: 100%; height: 340px;"></div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, Ref } from 'vue';
-import { Terminal } from 'xterm';
+import { Terminal } from '@xterm/xterm';
 import { useDisplay } from 'vuetify';
 
 const props = defineProps({
@@ -26,7 +26,7 @@ onMounted(async () => {
 </script>
 
 <script lang="ts">
-import { FitAddon } from 'xterm-addon-fit';
+import { FitAddon } from '@xterm/addon-fit';
 
 export async function startXterm(term: Terminal, terminal: Ref<HTMLElement | null>) {
     /*
@@ -70,5 +70,5 @@ export function disableStdin(term: Terminal) {
 </script>
 
 <style>
-@import '~/xterm/css/xterm.css';
+@import '~/@xterm/xterm/css/xterm.css';
 </style>

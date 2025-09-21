@@ -20,12 +20,12 @@
 <script lang="ts">
 // JS Imports
 import { ref, Ref } from 'vue';
-import { Terminal } from 'xterm';
+import { Terminal } from '@xterm/xterm';
 import { loadPyodide } from 'pyodide';
 import { startXterm, showCursor, hideCursor, disableStdin } from '@/components/XTerm.vue';
 
 // Python variables
-const pyodideIndexURL = "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/";
+const pyodideIndexURL = "https://cdn.jsdelivr.net/pyodide/v0.28.2/full/";
 const scapyWheelURL = new URL(`/${process.env.scapywhl}`, import.meta.url).href;
 
 // Constants
@@ -406,5 +406,5 @@ onMounted(async () => {
 </script>
 
 <style>
-@import '~/xterm/css/xterm.css';
+@import '~/@xterm/xterm/css/xterm.css';
 </style>
