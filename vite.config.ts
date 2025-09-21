@@ -5,7 +5,7 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 // Utilities
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
-import { readdirSync } from 'fs'
+import { readdirSync } from 'node:fs'
 
 // Most recent Scapy wheel
 const scapywhl = "src/assets/" + readdirSync('src/assets').filter(fn => fn.endsWith('.whl'))[0];
