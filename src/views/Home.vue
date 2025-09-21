@@ -191,7 +191,7 @@
                 <v-card-text class="text-body-2">
                   <v-row>
                     <v-col cols="6" sm="4" lg="6">
-                      <SponsorCard name="Gabriel Potter" role="Head Maintainer" user="gpotter2" userid="10530980" />
+                      <SponsorCard name="Gabriel Potter" role="Lead Maintainer" user="gpotter2" userid="10530980" />
                     </v-col>
                     <v-col cols="6" sm="4" lg="6">
                       <SponsorCard name="Nils Weiss" role="Maintainer" user="polybassa" userid="1676055" />
