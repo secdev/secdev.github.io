@@ -5,10 +5,10 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 // Utilities
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
-import { readdirSync } from 'node:fs'
+import { readdirSync } from 'fs'
 
 // Most recent Scapy wheel
-const scapywhl = "src/assets/" + readdirSync('src/assets').filter(fn => fn.endsWith('.whl'))[0];
+const scapywhl = readdirSync('public').filter(fn => fn.endsWith('.whl'))[0];
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -44,8 +44,6 @@ export default defineConfig({
       '.vue',
     ],
   },
-  // for scapy pyodide assets
-  assetsInclude: [scapywhl],
   server: {
     port: 3000,
     watch: {

@@ -7,7 +7,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix --ignore-path .gitignore",
-    "postinstall": "pip wheel -w src/assets/ https://github.com/secdev/scapy/archive/refs/heads/master.zip"
+    "postinstall": "pip wheel -w public/ https://github.com/secdev/scapy/archive/refs/heads/master.zip"
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
