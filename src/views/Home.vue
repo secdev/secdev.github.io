@@ -95,7 +95,7 @@
             </TerminalFrame>
           </v-col>
           <!-- Documentation -->
-          <v-col cols="12" lg="8">
+          <v-col cols="12" lg="7">
             <v-card variant="tonal">
               <v-card-title>
                 <h4>Documentation</h4>
@@ -181,7 +181,7 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col cols="12" lg="4" class="d-flex flex-column">
+          <v-col cols="12" lg="5" class="d-flex flex-column">
             <!-- Maintainers -->
             <v-container fluid class="pa-0">
               <v-card variant="tonal">
@@ -191,16 +191,16 @@
                 <v-card-text class="text-body-2">
                   <v-row>
                     <v-col cols="6" sm="4" lg="6">
-                      <SponsorCard user="gpotter2" userid="10530980" />
+                      <SponsorCard name="Gabriel Potter" role="Head Maintainer" user="gpotter2" userid="10530980" />
                     </v-col>
                     <v-col cols="6" sm="4" lg="6">
-                      <SponsorCard user="p-l-" userid="5064814" />
+                      <SponsorCard name="Nils Weiss" role="Maintainer" user="polybassa" userid="1676055" />
                     </v-col>
                     <v-col cols="6" sm="4" lg="6">
-                      <SponsorCard user="guedou" userid="11683796" />
+                      <SponsorCard name="Guillaume Valadon" role="Maintainer" user="guedou" userid="11683796" />
                     </v-col>
                     <v-col cols="6" sm="4" lg="6">
-                      <SponsorCard user="polybassa" userid="1676055" />
+                      <SponsorCard name="Pierre Lalet" role="Maintainer" user="p-l-" userid="5064814" />
                     </v-col>
                   </v-row>
                 </v-card-text>
