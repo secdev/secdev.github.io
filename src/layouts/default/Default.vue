@@ -5,7 +5,7 @@
     <default-view />
 
     <v-footer class="text-center d-flex flex-column">
-      <v-breadcrumbs divider="●">
+      <v-breadcrumbs divider="●" class="text-no-wrap">
         <v-breadcrumbs-item>Scapy community</v-breadcrumbs-item>
         <v-breadcrumbs-divider />
         <v-breadcrumbs-item>2008-{{ currentYear }}</v-breadcrumbs-item>
@@ -13,7 +13,7 @@
         <v-breadcrumbs-item><a href="https://scapy.net">scapy.net</a></v-breadcrumbs-item>
       </v-breadcrumbs>
       <p>
-        This website is published under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA-2.5</a>
+        This website is published under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA-2.5</a> and was developped by <a href="https://github.com/gpotter2">gpotter2</a>.
       </p>
     </v-footer>
   </v-app>

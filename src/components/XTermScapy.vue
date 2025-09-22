@@ -333,7 +333,7 @@ term.onData(e => {
 </script>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted } from 'vue';
 import { useDisplay } from 'vuetify';
 
 const { smAndDown } = useDisplay();

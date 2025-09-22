@@ -83,10 +83,10 @@
           <v-col cols="12" lg="5">
             <TerminalFrame style="position: relative;">
               <XTerm :static="DEMO_CODE" class="scapy-term" />
-              <div style="position: absolute; right: 5px; bottom: 5px;">
+              <div style="position: absolute; right: 20px; bottom: 20px;">
                 <v-tooltip text="Try Scapy" location="start">
                   <template v-slot:activator="{ props }">
-                    <v-btn v-bind="props" class="px-0" min-width="36px" color="yellow" @click="setTryScapy(true)">
+                    <v-btn v-bind="props" class="px-0 text-center" min-width="36px" color="yellow" @click="setTryScapy(true)">
                       <span class="font-weight-bold">>_</span>
                     </v-btn>
                   </template>
