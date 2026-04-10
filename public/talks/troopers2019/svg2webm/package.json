@@ -4,7 +4,7 @@
   "description": "Converts animated SVGs created with termtosvg to webm",
   "main": "main.js",
   "dependencies": {
-    "electron": "^37.1.0"
+    "electron": "^41.2.0"
   },
   "scripts": {
     "start": "electron ."
