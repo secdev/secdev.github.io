@@ -71,8 +71,8 @@
                       Scapy runs natively on Linux, macOS, most Unixes, and on Windows with Npcap.
                       It is published under <a href="https://www.gnu.org/licenses/gpl-2.0"
                         class="text-decoration-none text-primary">GPLv2</a>.<br />
-                      Starting from version 2.5.0+, it supports <span class="text-primary">Python
-                        3.7+</span> (and PyPy).<br />
+                      Starting from version 2.8.0+, it supports <span class="text-primary">Python
+                        3.9+</span> (and PyPy).<br />
                     </p>
                   </v-col>
                 </v-row>
