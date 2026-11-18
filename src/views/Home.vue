@@ -493,6 +493,17 @@ const RESOURCES = [
     ]
   },
   {
+    title: "Scapy for Network Security Testing",
+    author: "HackITA",
+    links: [
+      {
+        tooltip: "Website",
+        icon: mdiWeb,
+        link: "https://en.hackita.it/articoli/scapy/"
+      }
+    ]
+  },
+  {
     title: "Security Power Tools",
     author: "Philippe Biondi",
     links: [
